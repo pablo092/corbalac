@@ -1,6 +1,6 @@
 # Corbalac - Distribuidora de Fiambres
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-181717?style=flat&logo=github)](https://tu-usuario.github.io/corvalac/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-181717?style=flat&logo=github)](https://tu-usuario.github.io/corbalac/)
 
 Sitio web estático para Corbalac, distribuidora mayorista de fiambres de primera calidad. Este sitio web muestra información sobre los productos, servicios y datos de contacto de la empresa.
 
@@ -22,7 +22,7 @@ Sitio web estático para Corbalac, distribuidora mayorista de fiambres de primer
 ## 📁 Estructura del Proyecto
 
 ```
-corvalac/
+corbalac/
 ├── .github/
 │   └── workflows/      # Configuraciones de GitHub Actions
 ├── css/
@@ -39,7 +39,7 @@ corvalac/
 ## 🌐 Despliegue
 
 El sitio está desplegado en GitHub Pages. Para acceder a la versión en vivo, visita:
-[Ver Sitio Web](https://tu-usuario.github.io/corvalac/)
+[Ver Sitio Web](https://tu-usuario.github.io/corbalac/)
 
 ## 📝 Licencia
 
