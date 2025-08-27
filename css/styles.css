@@ -1,0 +1,63 @@
+:root {
+  --brand-amber: #F6E08D;
+  --brand-dark: #2C2C2C;
+  --brand-green: #25D366;
+  --brand-ivory: #FFF9E5;
+}
+
+.bg-brand-dark { background-color: var(--brand-dark); }
+.text-brand-dark { color: var(--brand-dark); }
+.bg-brand-amber { background-color: var(--brand-amber); }
+.text-brand-amber { color: var(--brand-amber); }
+
+.btn-wa { 
+  background: var(--brand-green); 
+  color: #fff; 
+}
+
+.btn-wa:hover { 
+  filter: brightness(0.95); 
+}
+
+.btn-amber { 
+  background: var(--brand-amber); 
+  color: #2C2C2C; 
+}
+
+.btn-amber:hover { 
+  filter: brightness(0.95); 
+}
+
+.hero-grad {
+  background: radial-gradient(1200px 400px at 10% 10%, var(--brand-amber) 0%, #ffeaa0 25%, #fff 60%),
+              linear-gradient(90deg, #ffffff 0%, #fff 100%);
+}
+
+/* Carousel styles */
+.carousel-item { 
+  transition: opacity .5s ease; 
+}
+
+.carousel-item.hidden { 
+  opacity: 0; 
+  display: none; 
+}
+
+.carousel-item.active { 
+  opacity: 1; 
+  display: block; 
+}
+
+/* Product card hover effect */
+.product-card:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 10px 20px rgba(0,0,0,.08); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hide elements when printing */
+@media print {
+  #actions, #contacto, #hero, #carousel, #footer, #shareBtn, #waBtn { 
+    display: none !important; 
+  }
+}
