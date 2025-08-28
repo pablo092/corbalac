@@ -1,27 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 
+/* =========================
+   Variables de marca
+   ========================= */
 :root {
-  --brand-dark: #3b3a3a;   /* texto/headers */
-  --brand-dark2: #2e2e2e;  /* apoyo */
-  --brand-cream: #faefc7;  /* fondo claro */
-  --brand-cheese: #fde78c; /* acento */
-  --brand-wa: #25D366;     /* WhatsApp */
+  --brand-dark:   #3b3a3a;   /* títulos/texto */
+  --brand-dark2:  #2e2e2e;   /* apoyo */
+  --brand-cream:  #faefc7;   /* fondo claro */
+  --brand-cheese: #fde78c;   /* acento */
+  --brand-wa:     #25D366;   /* WhatsApp */
+
   --font-display: 'Baloo 2', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  --font-body: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  
-  /* Mantener compatibilidad */
-  --brand-amber: var(--brand-cheese);
-  --brand-ivory: var(--brand-cream);
-  --brand-green: var(--brand-wa);
+  --font-body:    'Nunito',  system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  /* compat con tu HTML */
+  --brand-amber:  var(--brand-cheese);
+  --brand-ivory:  var(--brand-cream);
+  --brand-green:  var(--brand-wa);
 }
 
-/* Tipografía */
+/* =========================
+   Base tipográfica y fondos
+   ========================= */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background: var(--brand-cream);
+}
+
 body {
   font-family: var(--font-body);
   color: var(--brand-dark);
   line-height: 1.6;
   font-weight: 400;
-  background-color: var(--brand-cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;      /* necesario para ::after */
+  background: transparent; /* para que se vea la marca de agua */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,131 +48,123 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-/* Utilidades */
-.bg-brand-dark { background-color: var(--brand-dark); }
+/* =========================
+   Utilidades de color
+   ========================= */
+.bg-brand-dark   { background-color: var(--brand-dark); }
 .text-brand-dark { color: var(--brand-dark); }
-.bg-brand-amber, .bg-brand-cheese { background-color: var(--brand-cheese); }
-.text-brand-amber, .text-brand-cheese { color: var(--brand-cheese); }
-.bg-brand-cream { background-color: var(--brand-cream); }
-.text-brand-cream { color: var(--brand-cream); }
+.bg-brand-amber,
+.bg-brand-cheese { background-color: var(--brand-cheese); }
+.text-brand-amber,
+.text-brand-cheese { color: var(--brand-cheese); }
+.bg-brand-cream  { background-color: var(--brand-cream); }
+.text-brand-cream{ color: var(--brand-cream); }
 
-.btn-wa { 
-  background: var(--brand-green); 
-  color: #fff; 
+/* =========================
+   Botones
+   ========================= */
+.btn-wa {
+  background: var(--brand-green);
+  color: #fff;
 }
+.btn-wa:hover { filter: brightness(0.95); }
 
-.btn-wa:hover { 
-  filter: brightness(0.95); 
+.btn-amber {
+  background: var(--brand-amber);
+  color: #2C2C2C;
 }
+.btn-amber:hover { filter: brightness(0.95); }
 
-.btn-amber { 
-  background: var(--brand-amber); 
-  color: #2C2C2C; 
-}
-
-.btn-amber:hover { 
-  filter: brightness(0.95); 
-}
-
+/* =========================
+   Hero
+   ========================= */
 .hero-grad {
-  background: radial-gradient(1200px 400px at 10% 10%, var(--brand-amber) 0%, #ffeaa0 25%, #fff 60%),
-              linear-gradient(90deg, #ffffff 0%, #fff 100%);
+  background:
+    radial-gradient(1200px 400px at 10% 10%, var(--brand-amber) 0%, #ffeaa0 25%, #fff 60%),
+    linear-gradient(90deg, #ffffff 0%, #fff 100%);
 }
 
-/* Carousel styles */
-.carousel-item { 
-  transition: opacity .5s ease; 
-}
+/* =========================
+   Carrusel
+   ========================= */
+.carousel-item { transition: opacity .5s ease; }
+.carousel-item.hidden { opacity: 0; display: none; }
+.carousel-item.active { opacity: 1; display: block; }
 
-.carousel-item.hidden {
-  opacity: 0; 
-  display: none; 
-}
-
-.carousel-item.active { 
-  opacity: 1; 
-  display: block; 
-}
-
-/* Estilos generales para el scroll suave */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Espacio para el header fijo */
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  scroll-behavior: smooth;
-}
-
-/* Estilos para las secciones */
-section {
-  scroll-margin-top: 80px; /* Ajuste para el header fijo */
-  transition: all 0.3s ease-in-out;
-}
-
-/* Efecto sutil al hacer hover en los enlaces de navegación */
+/* =========================
+   Navegación (subrayado suave)
+   ========================= */
 nav a {
   position: relative;
-  transition: all 0.3s ease;
+  transition: all .3s ease;
 }
-
-nav a::after {
+nav a::after{
   content: '';
   position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
+  left: 0; bottom: -2px;
+  width: 0; height: 2px;
   background-color: var(--brand-amber);
-  transition: width 0.3s ease;
+  transition: width .3s ease;
+}
+nav a:hover::after{ width: 100%; }
+
+/* =========================
+   Secciones
+   ========================= */
+section {
+  scroll-margin-top: 80px;
+  transition: all .3s ease-in-out;
 }
 
-nav a:hover::after {
-  width: 100%;
+/* =========================
+   Tarjeta de producto
+   ========================= */
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
-/* Fondo fijo con el logo - Versión mejorada */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('../icon.png');
-  background-size: 50vmin; /* Tamaño óptimo */
-  background-position: 90% 50px; /* Esquina superior derecha */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.35; /* Mayor visibilidad */
-  filter: grayscale(30%) brightness(1.1) drop-shadow(0 0 10px rgba(0,0,0,0.2));
-  z-index: -1;
-  pointer-events: none;
-  background-blend-mode: overlay;
-  background-color: var(--brand-cream);
-  
-  /* Asegurar cobertura total */
-  min-height: 100vh;
-  min-width: 100vw;
-  
-  /* Suavizar transiciones */
-  transition: opacity 0.5s ease;
+/* =========================
+   Marca de agua (siempre visible)
+   =========================
+   Ruta desde css/styles.css → index.html: ../logo.png
+   Si está en images/logo.png usa: url('../images/logo.png')
+*/
+body::after{
+  content:"";
+  position: fixed; inset: 0;
+  background: url('../logo.png') no-repeat right 5vw top 64px / clamp(220px, 42vmin, 560px);
+  background-position: center center !important;                 /* centrado */
+  background-size: clamp(520px, 72vmin, 1200px) !important;      /* más grande y responsive */
+  opacity: .06 !important;              /* ajustá intensidad */
+  pointer-events: none;         /* no bloquea clics */
+  z-index: 1;          /* por encima de todo */
+  /* Si el logo es oscuro: habilitá para integrarlo con fondos blancos */
+  /* mix-blend-mode: multiply; */
 }
 
-/* Product card hover effect */
-.product-card:hover { 
-  transform: translateY(-3px); 
-  box-shadow: 0 10px 20px rgba(0,0,0,.08); 
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Responsivo: tamaño/posición de la marca de agua */
+@media (max-width: 1024px){
+  body::after{
+    background-position: right 3vw top 48px;
+    background-size: clamp(440px, 70vmin, 1000px) !important; 
+  }
+}
+@media (max-width: 640px){
+  body::after{
+    background-position: right -10vw top 24px;
+    background-size: clamp(320px, 65vmin, 760px) !important;
+    opacity: .18;
+  }
 }
 
-/* Hide elements when printing */
-@media print {
-  #actions, #contacto, #hero, #carousel, #footer, #shareBtn, #waBtn { 
-    display: none !important; 
+/* =========================
+   Impresión
+   ========================= */
+@media print{
+  body::after{ display:none !important; }
+  #actions, #contacto, #hero, #carousel, #footer, #shareBtn, #waBtn{
+    display: none !important;
   }
 }
