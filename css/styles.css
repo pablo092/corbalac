@@ -38,7 +38,7 @@
   transition: opacity .5s ease; 
 }
 
-.carousel-item.hidden { 
+.carousel-item.hidden {
   opacity: 0; 
   display: none; 
 }
@@ -46,6 +46,65 @@
 .carousel-item.active { 
   opacity: 1; 
   display: block; 
+}
+
+/* Estilos generales para el scroll suave */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Espacio para el header fijo */
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* Estilos para las secciones */
+section {
+  scroll-margin-top: 80px; /* Ajuste para el header fijo */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efecto sutil al hacer hover en los enlaces de navegación */
+nav a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--brand-amber);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../icon.png');
+  background-size: 50vmin; /* Reducido para que no sea tan grande */
+  background-position: center 30%; /* Posicionado un poco más arriba del centro */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.08; /* Aumentada la opacidad para mejor visibilidad */
+  filter: grayscale(100%) brightness(1.2); /* Hacemos el logo en escala de grises y un poco más claro */
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Product card hover effect */
