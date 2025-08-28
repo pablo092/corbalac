@@ -1,14 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
+
 :root {
-  --brand-amber: #F6E08D;
-  --brand-dark: #2C2C2C;
-  --brand-green: #25D366;
-  --brand-ivory: #FFF9E5;
+  --brand-dark: #3b3a3a;   /* texto/headers */
+  --brand-dark2: #2e2e2e;  /* apoyo */
+  --brand-cream: #faefc7;  /* fondo claro */
+  --brand-cheese: #fde78c; /* acento */
+  --brand-wa: #25D366;     /* WhatsApp */
+  --font-display: 'Baloo 2', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  
+  /* Mantener compatibilidad */
+  --brand-amber: var(--brand-cheese);
+  --brand-ivory: var(--brand-cream);
+  --brand-green: var(--brand-wa);
 }
 
+/* Tipografía */
+body {
+  font-family: var(--font-body);
+  color: var(--brand-dark);
+  line-height: 1.6;
+  font-weight: 400;
+  background-color: var(--brand-cream);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--brand-dark);
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+
+/* Utilidades */
 .bg-brand-dark { background-color: var(--brand-dark); }
 .text-brand-dark { color: var(--brand-dark); }
-.bg-brand-amber { background-color: var(--brand-amber); }
-.text-brand-amber { color: var(--brand-amber); }
+.bg-brand-amber, .bg-brand-cheese { background-color: var(--brand-cheese); }
+.text-brand-amber, .text-brand-cheese { color: var(--brand-cheese); }
+.bg-brand-cream { background-color: var(--brand-cream); }
+.text-brand-cream { color: var(--brand-cream); }
 
 .btn-wa { 
   background: var(--brand-green); 
@@ -89,6 +119,7 @@ nav a:hover::after {
   width: 100%;
 }
 
+/* Fondo fijo con el logo - Versión mejorada */
 body::before {
   content: '';
   position: fixed;
@@ -97,14 +128,23 @@ body::before {
   right: 0;
   bottom: 0;
   background-image: url('../icon.png');
-  background-size: 50vmin; /* Reducido para que no sea tan grande */
-  background-position: center 30%; /* Posicionado un poco más arriba del centro */
+  background-size: 50vmin; /* Tamaño óptimo */
+  background-position: 90% 50px; /* Esquina superior derecha */
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.08; /* Aumentada la opacidad para mejor visibilidad */
-  filter: grayscale(100%) brightness(1.2); /* Hacemos el logo en escala de grises y un poco más claro */
+  opacity: 0.35; /* Mayor visibilidad */
+  filter: grayscale(30%) brightness(1.1) drop-shadow(0 0 10px rgba(0,0,0,0.2));
   z-index: -1;
   pointer-events: none;
+  background-blend-mode: overlay;
+  background-color: var(--brand-cream);
+  
+  /* Asegurar cobertura total */
+  min-height: 100vh;
+  min-width: 100vw;
+  
+  /* Suavizar transiciones */
+  transition: opacity 0.5s ease;
 }
 
 /* Product card hover effect */
