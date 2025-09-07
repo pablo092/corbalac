@@ -1,4 +1,4 @@
-# Corbalac - Distribuidora de Fiambres
+# Corbalac
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-181717?style=flat&logo=github)](https://tu-usuario.github.io/corbalac/)
 
