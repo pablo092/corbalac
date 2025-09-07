@@ -392,12 +392,46 @@ function setupDailySpecial() {
   });
 }
 
+// Initialize WhatsApp button
+function initWhatsAppButton() {
+  const whatsappBtn = document.createElement('a');
+  whatsappBtn.href = 'https://wa.me/5491164170916?text=' + encodeURIComponent(
+    'Hola Corbalac, quisiera hacer un pedido de sándwiches:\n\n' +
+    '*Sabor*: \n' +
+    '*Cantidad*: \n' +
+    '*Dirección*: \n' +
+    '*Horario*: \n\n' +
+    '🍔🍟 ¡Gracias!'
+  );
+  whatsappBtn.target = '_blank';
+  whatsappBtn.className = 'whatsapp-button';
+  whatsappBtn.innerHTML = `
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-notification">!</span>
+  `;
+  
+  // Add floating animation on hover
+  whatsappBtn.addEventListener('mouseenter', function() {
+    this.classList.add('float-animation');
+  });
+  
+  whatsappBtn.addEventListener('mouseleave', function() {
+    this.classList.remove('float-animation');
+  });
+  
+  // Add to body
+  document.body.appendChild(whatsappBtn);
+}
+
 // Inicialización
 (async () => {
   // Configuración del menú de sándwiches
   if (document.getElementById('sandwiches')) {
     setupDailySpecial();
   }
+  
+  // Initialize WhatsApp button
+  initWhatsAppButton();
   
   // Configuración de WhatsApp
   if (document.getElementById("waBtn")) {
