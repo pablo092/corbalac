@@ -203,6 +203,25 @@ section {
 }
 
 /* =========================
+   Formularios
+   ========================= */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input:invalid, 
+textarea:invalid, 
+select:invalid {
+  border-color: #f87171;
+}
+
+input:focus:invalid, 
+textarea:focus:invalid, 
+select:focus:invalid {
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+/* =========================
    Marca de agua (siempre visible)
    =========================
    Ruta desde css/styles.css → index.html: ../logo.png

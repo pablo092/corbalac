@@ -300,6 +300,21 @@ async function generatePDF(products) {
   }
 }
 
+// Función para compartir lista de precios por WhatsApp
+function shareOnWhatsApp(event) {
+  event.preventDefault();
+  const message = encodeURIComponent('Hola, te comparto la lista de precios de Corbalac:');
+  const pdfUrl = encodeURIComponent(window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf');
+  window.open(`https://wa.me/?text=${message}%20${pdfUrl}`, '_blank');
+}
+
+// Función para mostrar mensajes de retroalimentación
+function showFeedback(element, message, type) {
+  element.textContent = message;
+  element.className = `p-3 rounded-lg text-sm mb-4 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+  element.classList.remove('hidden');
+}
+
 // Inicialización
 (async () => {
   // Configuración de WhatsApp

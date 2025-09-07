@@ -220,17 +220,6 @@
             </div>
           </form>
           
-          <style>
-            .form-group {
-              margin-bottom: 1rem;
-            }
-            input:invalid, textarea:invalid, select:invalid {
-              border-color: #f87171;
-            }
-            input:focus:invalid, textarea:focus:invalid, select:focus:invalid {
-              box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
-            }
-          </style>
         </div>
         <div class="w-full md:w-1/2">
           <div class="bg-[var(--brand-ivory)] p-6 rounded-lg border h-full">
@@ -258,7 +247,7 @@
               <div class="flex items-center"><i class="fab fa-instagram text-[#E1306C] text-xl mr-3"></i><p><a href="https://www.instagram.com/corbalac/" target="_blank" class="hover:underline">@corbalac</a></p></div>
               <div class="flex items-center"><i class="fab fa-facebook text-[#1877F2] text-xl mr-3"></i><p><a href="https://www.facebook.com/corbalac/" target="_blank" class="hover:underline">Corbalac</a></p></div>
             </div>
-            <div class="mt-8"><h5 class="font-semibold mb-2">Horario de atención</h5><p>Lunes a Viernes: 9:00–17:00</p><p>Sábados: 10:00–13:00</p></div>
+            <div class="mt-8"><h5 class="font-semibold mb-2">Horario de atención</h5><p>Lunes a Viernes: 9:00hs – 17:00hs</p><p>Sábados: 10:00hs – 13:00hs</p></div>
           </div>
         </div>
       </div>
@@ -290,78 +279,5 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    // Función para compartir lista de precios por WhatsApp
-    function shareOnWhatsApp() {
-      event.preventDefault();
-      const message = encodeURIComponent('Hola, te comparto la lista de precios de Corbalac:');
-      const pdfUrl = encodeURIComponent(window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf');
-      window.open(`https://wa.me/?text=${message}%20${pdfUrl}`, '_blank');
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      const contactForm = document.getElementById('contactForm');
-      const formFeedback = document.getElementById('formFeedback');
-      const whatsappNumber = '5491164170916'; // Número de WhatsApp de Corbalac
-
-      // Función para limpiar el formulario
-      const resetForm = () => {
-        contactForm.reset();
-        formFeedback.classList.add('hidden');
-      };
-
-      // Envío del formulario por WhatsApp
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          // Obtener los valores del formulario
-          const formData = new FormData(contactForm);
-          const formValues = Object.fromEntries(formData.entries());
-          
-          // Crear mensaje para WhatsApp
-          let whatsappMessage = `*Nuevo mensaje de contacto*\n\n`;
-          
-          if (formValues.name) {
-            whatsappMessage += `*Nombre:* ${formValues.name}\n`;
-          }
-          
-          if (formValues.email) {
-            whatsappMessage += `*Email:* ${formValues.email}\n`;
-          }
-          
-          const selectedSubject = document.querySelector('#subject option:checked');
-          if (selectedSubject && selectedSubject.value) {
-            whatsappMessage += `*Asunto:* ${selectedSubject.text}\n`;
-          }
-          
-          if (formValues.message) {
-            whatsappMessage += `*Mensaje:*\n${formValues.message}`;
-          } else {
-            // Si no hay mensaje, al menos agregar algo
-            whatsappMessage += `*Mensaje:* [Sin mensaje]`;
-          }
-          
-          // Codificar el mensaje para la URL
-          const encodedMessage = encodeURIComponent(whatsappMessage);
-          
-          // Abrir WhatsApp con el mensaje
-          window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-          
-          // Limpiar el formulario
-          resetForm();
-          
-          // Mostrar mensaje de confirmación
-          showFeedback('Redirigiendo a WhatsApp...', 'success');
-        });
-      }
-
-      // Función para mostrar mensajes de retroalimentación
-      function showFeedback(message, type) {
-        formFeedback.textContent = message;
-        formFeedback.className = `p-3 rounded-lg text-sm mb-4 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
-        formFeedback.classList.remove('hidden');
-      }
-    });
-  </script>
 </body>
 </html>
