@@ -24,7 +24,7 @@
         </div>
         <nav class="flex flex-wrap items-center gap-2 text-sm">
           <a href="#ofertas" class="nav-link">Ofertas Mayoristas</a>
-          <a id="waBtn" href="https://wa.me/5491123456789?text=Hola%20Corbalac%2C%20me%20interesa%20hacer%20un%20pedido" target="_blank" class="btn btn-wa">
+          <a href="#contacto" class="btn btn-wa">
             <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
           </a>
           <a href="#contacto" class="btn btn-outline">
@@ -291,6 +291,13 @@
 
   <script src="js/main.js"></script>
   <script>
+    // Función para compartir lista de precios por WhatsApp
+    function shareOnWhatsApp() {
+      event.preventDefault();
+      const message = encodeURIComponent('Hola, te comparto la lista de precios de Corbalac:');
+      const pdfUrl = encodeURIComponent(window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf');
+      window.open(`https://wa.me/?text=${message}%20${pdfUrl}`, '_blank');
+    }
     document.addEventListener('DOMContentLoaded', function() {
       const contactForm = document.getElementById('contactForm');
       const formFeedback = document.getElementById('formFeedback');
