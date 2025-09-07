@@ -315,10 +315,94 @@ function showFeedback(element, message, type) {
   element.classList.remove('hidden');
 }
 
+/* ====== SANDWICH MENU ====== */
+function setupDailySpecial() {
+  const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const specials = [
+    { 
+      name: 'Milanesa Clásica', 
+      description: '¡Todos los Lunes!',
+      price: '2,880', 
+      originalPrice: '3,200',
+      discount: '10%'
+    },
+    { 
+      name: 'Jamón Crudo y Queso', 
+      description: '¡Todos los Martes!',
+      price: '3,150', 
+      originalPrice: '3,500',
+      discount: '10%'
+    },
+    { 
+      name: 'Pollo Grillado', 
+      description: '¡Miércoles de Pollo!',
+      price: '2,790', 
+      originalPrice: '3,100',
+      discount: '10%'
+    },
+    { 
+      name: 'Vegetariano Especial', 
+      description: '¡Jueves Verde!',
+      price: '2,970', 
+      originalPrice: '3,300',
+      discount: '10%'
+    },
+    { 
+      name: 'Milanesa Napolitana', 
+      description: '¡Viernes de Milanesa!',
+      price: '3,150', 
+      originalPrice: '3,500',
+      discount: '10%'
+    },
+    { 
+      name: 'Lomito Completo', 
+      description: '¡Sábado Especial!',
+      price: '3,510', 
+      originalPrice: '3,900',
+      discount: '10%'
+    },
+    { 
+      name: 'Sandwich de Bondiola', 
+      description: '¡Domingo Familiar!',
+      price: '3,240', 
+      originalPrice: '3,600',
+      discount: '10%'
+    }
+  ];
+
+  const today = new Date().getDay(); // 0 = Domingo, 1 = Lunes, etc.
+  const todaySpecial = specials[today];
+  
+  const specialElement = document.getElementById('specialItem');
+  if (specialElement) {
+    specialElement.innerHTML = `
+      <p class="font-medium">${todaySpecial.name} - <span class="text-amber-600">${todaySpecial.description}</span></p>
+      <p class="text-sm">Precio especial: <span class="line-through text-gray-500">$${todaySpecial.originalPrice}</span> <span class="font-bold">$${todaySpecial.price}</span> (${todaySpecial.discount} OFF)</p>
+    `;
+  }
+
+  // Resaltar el ítem del día en el menú
+  const menuItems = document.querySelectorAll('.sandwich-item');
+  menuItems.forEach(item => {
+    const title = item.querySelector('h4');
+    if (title && title.textContent.includes(todaySpecial.name)) {
+      item.classList.add('ring-2', 'ring-amber-400');
+      item.querySelector('.text-green-600').classList.add('font-bold', 'text-base');
+    }
+  });
+}
+
 // Inicialización
 (async () => {
+  // Configuración del menú de sándwiches
+  if (document.getElementById('sandwiches')) {
+    setupDailySpecial();
+  }
+  
   // Configuración de WhatsApp
-  document.getElementById("waBtn").href = waContactLink();
+  if (document.getElementById("waBtn")) {
+    document.getElementById("waBtn").href = waContactLink();
+  }
   document.getElementById("shareBtn").href = `https://wa.me/?text=${encodeURIComponent(`Lista de precios – ${STORE_NAME}: ${location.href}`)}`;
   
   // Actualizar año del footer

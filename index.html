@@ -24,6 +24,7 @@
         </div>
         <nav class="flex flex-wrap items-center gap-2 text-sm">
           <a href="#ofertas" class="nav-link">Ofertas Mayoristas</a>
+          <a href="#sandwiches" class="nav-link">Nuestros Sándwiches</a>
           <a href="#contacto" class="btn btn-wa">
             <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
           </a>
@@ -171,6 +172,104 @@
     </div>
   </section>
 
+   <!-- Sandwiches Section -->
+   <section id="sandwiches" class="py-12 bg-white border-t border-amber-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <h3 class="text-3xl font-bold text-center text-brand-dark mb-8">Nuestros Sándwiches</h3>
+      <div class="mb-8 text-center text-sm text-gray-600">
+        <p class="mb-2">¡Todos los días un sándwich diferente en oferta!</p>
+        <p class="text-xs">* Los precios en efectivo tienen un 10% de descuento</p>
+      </div>
+      
+      <!-- Daily Special Banner -->
+      <div id="dailySpecial" class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-8 rounded-r">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <i class="fas fa-star text-amber-500 text-2xl"></i>
+          </div>
+          <div class="ml-3">
+            <h4 class="text-lg font-semibold text-amber-800">¡Oferta del Día!</h4>
+            <div id="specialItem" class="text-amber-700"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sandwich Menu -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Sandwich Item 1 -->
+        <div class="sandwich-item bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+          <div class="p-5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Milanesa Clásica</h4>
+                <p class="text-gray-600 text-sm mt-1">Pan casero, milanesa de carne, lechuga, tomate y mayonesa</p>
+              </div>
+              <div class="text-right">
+                <span class="block font-bold text-gray-900">$3,200</span>
+                <span class="block text-sm text-green-600">$2,880 en efectivo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandwich Item 2 -->
+        <div class="sandwich-item bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+          <div class="p-5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Jamón Crudo y Queso</h4>
+                <p class="text-gray-600 text-sm mt-1">Pan de campo, jamón crudo, queso brie, rúcula y oliva</p>
+              </div>
+              <div class="text-right">
+                <span class="block font-bold text-gray-900">$3,500</span>
+                <span class="block text-sm text-green-600">$3,150 en efectivo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandwich Item 3 -->
+        <div class="sandwich-item bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+          <div class="p-5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Pollo Grillado</h4>
+                <p class="text-gray-600 text-sm mt-1">Pan integral, pechuga grillada, palta, lechuga y salsa césar</p>
+              </div>
+              <div class="text-right">
+                <span class="block font-bold text-gray-900">$3,100</span>
+                <span class="block text-sm text-green-600">$2,790 en efectivo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandwich Item 4 -->
+        <div class="sandwich-item bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+          <div class="p-5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Vegetariano Especial</h4>
+                <p class="text-gray-600 text-sm mt-1">Pan de semillas, berenjena grillada, zuchini, queso de cabra y pesto</p>
+              </div>
+              <div class="text-right">
+                <span class="block font-bold text-gray-900">$3,300</span>
+                <span class="block text-sm text-green-600">$2,970 en efectivo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Print Button -->
+      <div class="mt-10 text-center">
+        <button onclick="window.print()" class="bg-brand-dark text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all flex items-center gap-2 mx-auto">
+          <i class="fas fa-print"></i> Imprimir Carta de Precios
+        </button>
+      </div>
+    </div>
+  </section>
+  
   <!-- Contacto -->
   <section id="contacto" class="py-12 bg-white border-t border-amber-100">
     <div class="max-w-6xl mx-auto px-4">

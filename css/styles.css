@@ -222,22 +222,84 @@ select:focus:invalid {
 }
 
 /* =========================
+   Estilos de Impresión
+   ========================= */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  
+  /* Ocultar elementos innecesarios en impresión */
+  header, footer, .no-print {
+    display: none !important;
+  }
+  
+  /* Estilos para la sección de sándwiches */
+  #sandwiches {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+  
+  #sandwiches h3 {
+    font-size: 24pt;
+    text-align: center;
+    margin: 20px 0 !important;
+  }
+  
+  .sandwich-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #eee !important;
+    box-shadow: none !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* Estilos para el banner de oferta del día */
+  #dailySpecial {
+    border: 2px solid #000 !important;
+    background: #fff8e1 !important;
+    color: #000 !important;
+    margin: 20px 0 !important;
+  }
+  
+  /* Asegurar que los precios se vean bien */
+  .text-green-600 {
+    color: #16a34a !important;
+  }
+  
+  /* Evitar que se rompan los ítems del menú */
+  .sandwich-item {
+    page-break-inside: avoid;
+  }
+  
+  /* Ajustar márgenes de impresión */
+  @page {
+    margin: 1.5cm;
+  }
+}
+
+/* =========================
    Marca de agua (siempre visible)
    =========================
    Ruta desde css/styles.css → index.html: ../logo.png
    Si está en images/logo.png usa: url('../images/logo.png')
 */
-body::after{
-  content:"";
-  position: fixed; inset: 0;
-  background: url('../logo.png') no-repeat right 5vw top 64px / clamp(220px, 42vmin, 560px);
-  background-position: center center !important;                 /* centrado */
-  background-size: clamp(520px, 72vmin, 1200px) !important;      /* más grande y responsive */
-  opacity: .06 !important;              /* ajustá intensidad */
-  pointer-events: none;         /* no bloquea clics */
-  z-index: 1;          /* por encima de todo */
-  /* Si el logo es oscuro: habilitá para integrarlo con fondos blancos */
-  /* mix-blend-mode: multiply; */
+@media screen {
+  body::after{
+    content:"";
+    position: fixed; inset: 0;
+    background: url('../logo.png') no-repeat right 5vw top 64px / clamp(220px, 42vmin, 560px);
+    background-position: center center !important;                 /* centrado */
+    background-size: clamp(520px, 72vmin, 1200px) !important;      /* más grande y responsive */
+    opacity: .06 !important;              /* ajustá intensidad */
+    pointer-events: none;         /* no bloquea clics */
+    z-index: 1;          /* por encima de todo */
+    /* Si el logo es oscuro: habilitá para integrarlo con fondos blancos */
+    /* mix-blend-mode: multiply; */
+  }
 }
 
 /* Responsivo: tamaño/posición de la marca de agua */
