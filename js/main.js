@@ -452,22 +452,28 @@ function initWhatsAppButton() {
     generatePDF(data);
   });
   
-  // Configurar botón de compartir por WhatsApp
-  document.getElementById('shareCatalog').addEventListener('click', (e) => {
-    e.preventDefault();
-    const message = `¡Hola! Te comparto el catálogo de productos de ${STORE_NAME}:\n\n${window.location.href}\n\n¡Hacé tu pedido por WhatsApp!`;
+  // Función para compartir lista de precios por WhatsApp
+  function shareOnWhatsApp(event) {
+    event.preventDefault();
+    const message = 'Hola, te comparto la lista de precios de Corbalac:';
+    const pdfUrl = window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf';
+    
     // Usar la API de compartir del navegador si está disponible
     if (navigator.share) {
       navigator.share({
-        title: `Catálogo de ${STORE_NAME}`,
+        title: `Lista de precios - ${STORE_NAME}`,
         text: message,
-        url: window.location.href
+        url: pdfUrl
       }).catch(console.error);
     } else {
-      // Si no soporta la API de compartir, abrir WhatsApp con el selector de contactos
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+      // Si no soporta la API de compartir, abrir WhatsApp con el mensaje
+      const whatsappMessage = encodeURIComponent(`${message} ${pdfUrl}`);
+      window.open(`https://wa.me/?text=${whatsappMessage}`, '_blank');
     }
-  });
+  }
+  
+  // Configurar botón de compartir por WhatsApp
+  document.getElementById('shareCatalog').addEventListener('click', shareOnWhatsApp);
   
   // Configurar búsqueda
   $search.addEventListener('input', (e) => {
