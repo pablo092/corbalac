@@ -420,20 +420,16 @@
           floatingIcon.classList.remove('opacity-0');
           floatingIcon.classList.add('opacity-100');
           
-          // Show watermark after first scroll past 300px
-          if (!watermarkShown) {
-            document.body.classList.add('watermark-visible');
-            watermarkShown = true;
-          }
+          // Show watermark when scrolled down past 300px
+          document.body.classList.add('watermark-visible');
+          watermarkShown = true;
         } else {
           // Hide floating icon when at the top
           floatingIcon.classList.add('opacity-0');
           floatingIcon.classList.remove('opacity-100');
           
           // Hide watermark when scrolled back to top
-          if (watermarkShown) {
-            document.body.classList.remove('watermark-visible');
-          }
+          document.body.classList.remove('watermark-visible');
         }
       });
 
