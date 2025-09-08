@@ -389,13 +389,22 @@ select:focus:invalid {
 }
 
 /* Responsivo: tamaño/posición de la marca de agua */
-@media (max-width: 1024px){
-  body::after{
-    background-position: right 3vw top 48px;
-    background-size: clamp(440px, 70vmin, 1000px) !important; 
+@media (max-width: 1024px) {
+  body::after {
+    background-position: center center !important;
+    background-size: clamp(320px, 80vmin, 800px) !important;
+    opacity: 0.03 !important; /* Más sutil en móviles */
+  }
+  
+  /* Asegurar que el contenido sea clickeable sobre la marca de agua */
+  body > *:not(::after) {
+    position: relative;
+    z-index: 2;
   }
 }
-@media (max-width: 640px){
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 640px) {
   body::after{
     background-position: right -10vw top 24px;
     background-size: clamp(320px, 65vmin, 760px) !important;
