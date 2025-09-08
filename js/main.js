@@ -469,29 +469,6 @@ function initWhatsAppButton() {
     }
   });
   
-  // Configurar envío del formulario de contacto
-  document.getElementById('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    let message = document.getElementById('message').value.trim();
-    
-    // Mensaje por defecto si no se ingresa ninguno
-    if (!message) {
-      message = 'Quisiera recibir información sobre sus productos y precios.';
-    }
-    
-    // Crear mensaje para WhatsApp
-    const whatsappMessage = `*Nuevo mensaje de contacto*\n\n` +
-      `*Nombre:* ${name}\n` +
-      `*Teléfono:* ${phone || 'No especificado'}\n\n` +
-      `*Mensaje:*\n${message}`;
-    
-    // Abrir WhatsApp con el mensaje
-    window.open(waContactLink(whatsappMessage), '_blank');
-  });
-  
   // Configurar búsqueda
   $search.addEventListener('input', (e) => {
     render(data, e.target.value);

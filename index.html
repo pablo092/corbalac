@@ -272,81 +272,86 @@
   
   <!-- Contacto -->
   <section id="contacto" class="py-12 bg-white border-t border-amber-100">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-4xl mx-auto px-4">
       <h3 class="text-3xl font-bold text-center text-brand-dark mb-8">Contacto</h3>
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="w-full md:w-1/2 bg-[var(--brand-ivory)] p-6 rounded-lg border">
-          <h4 class="text-xl font-semibold mb-4">Hacé tu pedido o consulta</h4>
-          <form id="contactForm" class="space-y-4">
-            <div class="form-group">
-              <label for="name" class="block text-gray-700 mb-1 font-medium">Nombre completo</label>
-              <input id="name" name="name" type="text"
-                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-amber)] transition-colors"
-                placeholder="Tu nombre completo">
-            </div>
-            
-            <div class="form-group">
-              <label for="email" class="block text-gray-700 mb-1 font-medium">Email (opcional)</label>
-              <input id="email" name="email" type="email" 
-                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-amber)] transition-colors"
-                placeholder="tucorreo@ejemplo.com">
-              <p class="text-gray-500 text-xs mt-1">Si prefieres que te contactemos por correo electrónico</p>
-              <p class="text-red-500 text-xs mt-1 hidden error-message">Por favor ingresa un email válido</p>
-            </div>
-            
-            <div class="form-group">
-              <label for="subject" class="block text-gray-700 mb-1 font-medium">Asunto</label>
-              <select id="subject" name="subject" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-amber)] bg-white">
-                <option value="" selected>Selecciona un asunto (opcional)</option>
-                <option value="consulta">Consulta general</option>
-                <option value="pedido">Realizar pedido</option>
-                <option value="precios">Consulta de precios</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="message" class="block text-gray-700 mb-1 font-medium">Mensaje</label>
-              <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-amber)] transition-colors" placeholder="Escribe tu mensaje aquí..."></textarea>
-            </div>
-            
-            <div id="formFeedback" class="hidden p-3 rounded-lg text-sm mb-4"></div>
-            
-            <div class="flex flex-col sm:flex-row gap-3">
-              <button type="submit" class="bg-[#25D366] hover:bg-[#128C7E] text-white px-6 py-3 rounded-full font-semibold w-full flex items-center justify-center gap-2 transition-all hover:shadow-md">
-                <i class="fab fa-whatsapp text-xl"></i> Enviar por WhatsApp
-              </button>
-            </div>
-          </form>
-          
+      
+      <!-- Mapa -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        <div class="h-64 w-full">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.748472300504!2d-58.4693923!3d-34.6449975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb51736b0e44d%3A0x9f4485027d4b0fbe!2sCORBALAC!5e0!3m2!1ses-419!2sar!4v1620000000000!5m2!1ses-419!2sar" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
-        <div class="w-full md:w-1/2">
-          <div class="bg-[var(--brand-ivory)] p-6 rounded-lg border h-full">
-            <h4 class="text-xl font-semibold mb-4">Información</h4>
-            <div class="space-y-4 text-sm">
-              <div class="mb-4">
-                <h5 class="font-semibold mb-2">Ubicación</h5>
-                <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden border border-gray-300">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.748472300504!2d-58.4693923!3d-34.6449975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb51736b0e44d%3A0x9f4485027d4b0fbe!2sCORBALAC!5e0!3m2!1ses-419!2sar!4v1620000000000!5m2!1ses-419!2sar" 
-                    width="100%" 
-                    height="200" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy"
-                    class="w-full h-full"
-                    referrerpolicy="no-referrer-when-downgrade">
-                  </iframe>
-                </div>
-                <p class="text-sm mt-2"><i class="fa-solid fa-location-dot text-brand-dark mr-2"></i>Mariano Acosta 1311, CABA</p>
-              </div>
-              <div class="flex items-center"><i class="fa-solid fa-phone text-brand-dark mr-3"></i><p>Teléfono: +54 9 11 6417-0916</p></div>
-              <div class="flex items-center"><i class="fa-solid fa-envelope text-brand-dark mr-3"></i><p>Email: <a href="mailto:grupocorbalac@gmail.com" class="hover:underline">grupocorbalac@gmail.com</a></p></div>
-              <div class="flex items-center"><i class="fab fa-whatsapp text-[var(--brand-green)] text-xl mr-3"></i><p>WhatsApp: +54 9 11 6417-0916</p></div>
-              <div class="flex items-center"><i class="fab fa-instagram text-[#E1306C] text-xl mr-3"></i><p><a href="https://www.instagram.com/corbalac/" target="_blank" class="hover:underline">@corbalac</a></p></div>
-              <div class="flex items-center"><i class="fab fa-facebook text-[#1877F2] text-xl mr-3"></i><p><a href="https://www.facebook.com/corbalac/" target="_blank" class="hover:underline">Corbalac</a></p></div>
-            </div>
-            <div class="mt-8"><h5 class="font-semibold mb-2">Horario de atención</h5><p>Lunes a Viernes: 9:00hs – 17:00hs</p><p>Sábados: 10:00hs – 13:00hs</p></div>
+      </div>
+
+      <!-- Info en 3 columnas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Contacto -->
+        <div class="bg-[var(--brand-ivory)] p-5 rounded-lg border border-gray-100">
+          <h4 class="font-semibold text-lg mb-3 text-brand-dark flex items-center">
+            <i class="fas fa-phone-alt mr-2 text-amber-600"></i>
+            Contacto
+          </h4>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-amber-600 mt-1 mr-2 w-4 text-center"></i>
+              <span>Mariano Acosta 1311, CABA</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-amber-600 mr-2 w-4 text-center"></i>
+              <a href="tel:+5491164170916" class="hover:underline">+54 9 11 6417-0916</a>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-amber-600 mr-2 w-4 text-center"></i>
+              <a href="mailto:grupocorbalac@gmail.com" class="hover:underline">grupocorbalac@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Horario -->
+        <div class="bg-[var(--brand-ivory)] p-5 rounded-lg border border-gray-100">
+          <h4 class="font-semibold text-lg mb-3 text-brand-dark flex items-center">
+            <i class="far fa-clock mr-2 text-amber-600"></i>
+            Horario
+          </h4>
+          <ul class="space-y-1">
+            <li class="flex justify-between">
+              <span class="text-gray-600">Lun - Vie:</span>
+              <span class="font-medium">9:00 - 17:00hs</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="text-gray-600">Sábados:</span>
+              <span class="font-medium">10:00 - 13:00hs</span>
+            </li>
+            <li class="pt-2 mt-2 border-t border-gray-100 text-sm text-amber-700">
+              <i class="fas fa-info-circle mr-1"></i>
+              Cerrado domingos y feriados
+            </li>
+          </ul>
+        </div>
+
+        <!-- Redes -->
+        <div class="bg-[var(--brand-ivory)] p-5 rounded-lg border border-gray-100">
+          <h4 class="font-semibold text-lg mb-3 text-brand-dark flex items-center">
+            <i class="fas fa-share-alt mr-2 text-amber-600"></i>
+            Redes
+          </h4>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://wa.me/5491164170916" target="_blank" class="w-10 h-10 bg-green-100 text-green-700 rounded-full flex items-center justify-center hover:bg-green-200 transition-colors" title="WhatsApp">
+              <i class="fab fa-whatsapp text-lg"></i>
+            </a>
+            <a href="https://www.instagram.com/corbalac/" target="_blank" class="w-10 h-10 bg-pink-100 text-pink-700 rounded-full flex items-center justify-center hover:bg-pink-200 transition-colors" title="Instagram">
+              <i class="fab fa-instagram text-lg"></i>
+            </a>
+            <a href="https://www.facebook.com/corbalac/" target="_blank" class="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center hover:bg-blue-200 transition-colors" title="Facebook">
+              <i class="fab fa-facebook-f text-lg"></i>
+            </a>
           </div>
         </div>
       </div>
