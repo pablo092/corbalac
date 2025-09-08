@@ -13,22 +13,30 @@
 <body class="bg-[var(--brand-ivory)] text-gray-900 font-sans">
   <!-- Header -->
   <header class="bg-white text-gray-900 shadow-lg">
-    <div class="max-w-6xl mx-auto px-4 py-6">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-        <div class="flex items-center gap-3">
-          <!-- usa tu archivo real si no se llama icon.png -->
-          <img src="icon.png" alt="Logo Corbalac" class="h-16 w-16 md:h-20 md:w-20 rounded-md" />
-          <div>
-            <h1 class="text-2xl font-bold tracking-wide">CORBALAC</h1>
-          </div>
-        </div>
-        <nav class="flex flex-wrap items-center gap-2 text-sm">
-          <a href="#ofertas" class="nav-link">Ofertas Mayoristas</a>
-          <a href="#sandwiches" class="nav-link">Nuestros Sándwiches</a>
-          <a href="#contacto" class="btn btn-wa">
+    <!-- Logo Principal Centrado - Pantalla Completa -->
+    <div class="w-full min-h-[80vh] md:min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-amber-50">
+      <div class="text-center px-4">
+        <img 
+          src="icon.png" 
+          alt="Logo Corbalac" 
+          class="mx-auto h-auto w-full max-w-md md:max-w-2xl animate-fade-in" 
+          style="animation: fadeIn 1.5s ease-in-out;"
+        />
+      </div>
+    </div>
+
+    <!-- Barra de Navegación -->
+    <div class="bg-amber-50 py-3 border-t border-amber-100">
+      <div class="max-w-6xl mx-auto px-4">
+        <nav class="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-sm md:text-base">
+          <a href="#ofertas" class="nav-link hover:text-amber-600 transition-colors">Ofertas Mayoristas</a>
+          <div class="h-5 w-px bg-amber-200"></div>
+          <a href="#sandwiches" class="nav-link hover:text-amber-600 transition-colors">Nuestros Sándwiches</a>
+          <div class="h-5 w-px bg-amber-200"></div>
+          <a href="#contacto" class="btn btn-wa hover:bg-green-600 transition-colors">
             <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
           </a>
-          <a href="https://www.google.com/maps?ll=-34.644999,-58.468747&z=15&t=m&hl=es-419&gl=AR&mapclient=embed&cid=11476443996185366462" target="_blank" class="btn btn-outline">
+          <a href="https://www.google.com/maps?ll=-34.644999,-58.468747&z=15&t=m&hl=es-419&gl=AR&mapclient=embed&cid=11476443996185366462" target="_blank" class="btn btn-outline hover:bg-amber-100 transition-colors">
             <i class="fas fa-map-marker-alt"></i> Encontrános acá
           </a>
         </nav>
@@ -383,6 +391,61 @@
   </footer>
 
   <!-- Main JavaScript -->
+  <!-- Floating Icon -->
+  <div id="floatingIcon" class="fixed bottom-8 right-8 z-50 opacity-0 transition-opacity duration-500">
+    <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110">
+      <i class="fas fa-arrow-up text-xl"></i>
+    </a>
+  </div>
+
   <script src="js/main.js"></script>
+  <script>
+    // Floating icon and watermark scroll behavior
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingIcon = document.getElementById('floatingIcon');
+      let hasScrolled = false;
+      let watermarkShown = false;
+
+      window.addEventListener('scroll', function() {
+        // Show floating icon after first scroll
+        if (!hasScrolled) {
+          hasScrolled = true;
+          floatingIcon.classList.remove('opacity-0');
+          floatingIcon.classList.add('opacity-100');
+        }
+
+        // Show/hide elements based on scroll position
+        if (window.scrollY > 300) {
+          // Show floating icon when scrolled down
+          floatingIcon.classList.remove('opacity-0');
+          floatingIcon.classList.add('opacity-100');
+          
+          // Show watermark after first scroll past 300px
+          if (!watermarkShown) {
+            document.body.classList.add('watermark-visible');
+            watermarkShown = true;
+          }
+        } else {
+          // Hide floating icon when at the top
+          floatingIcon.classList.add('opacity-0');
+          floatingIcon.classList.remove('opacity-100');
+          
+          // Hide watermark when scrolled back to top
+          if (watermarkShown) {
+            document.body.classList.remove('watermark-visible');
+          }
+        }
+      });
+
+      // Smooth scroll to top
+      floatingIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 </html>

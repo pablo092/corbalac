@@ -1,6 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 
 /* =========================
+   Animaciones
+   ========================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* =========================
    Variables de marca
    ========================= */
 :root {
@@ -350,7 +362,7 @@ select:focus:invalid {
 }
 
 /* =========================
-   Marca de agua (siempre visible)
+   Marca de agua (visible después de hacer scroll)
    =========================
    Ruta desde css/styles.css → index.html: ../logo.png
    Si está en images/logo.png usa: url('../images/logo.png')
@@ -358,15 +370,21 @@ select:focus:invalid {
 @media screen {
   body::after{
     content:"";
-    position: fixed; inset: 0;
-    background: url('../logo.png') no-repeat right 5vw top 64px / clamp(220px, 42vmin, 560px);
-    background-position: center center !important;                 /* centrado */
-    background-size: clamp(520px, 72vmin, 1200px) !important;      /* más grande y responsive */
-    opacity: .06 !important;              /* ajustá intensidad */
-    pointer-events: none;         /* no bloquea clics */
-    z-index: 1;          /* por encima de todo */
+    position: fixed; 
+    inset: 0;
+    background: url('../logo.png') no-repeat center center;
+    background-size: clamp(520px, 72vmin, 1200px) !important;
+    opacity: 0;  /* Inicialmente oculto */
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
     /* Si el logo es oscuro: habilitá para integrarlo con fondos blancos */
     /* mix-blend-mode: multiply; */
+  }
+  
+  /* Clase que se agrega con JavaScript después del primer scroll */
+  body.watermark-visible::after {
+    opacity: 0.06 !important;
   }
 }
 
