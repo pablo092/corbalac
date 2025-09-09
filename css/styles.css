@@ -386,11 +386,16 @@ select:focus:invalid {
   body.watermark-visible::after {
     opacity: 0.06 !important;
   }
+  
+  /* Inicialmente oculto */
+  body::after {
+    opacity: 0 !important;
+  }
 }
 
 /* Responsivo: tamaño/posición de la marca de agua */
 @media (max-width: 1024px) {
-  body::after {
+  body.watermark-visible::after {
     background-position: center center !important;
     background-size: clamp(320px, 80vmin, 800px) !important;
     opacity: 0.03 !important; /* Más sutil en móviles */
@@ -405,10 +410,10 @@ select:focus:invalid {
 
 /* Ajustes para móviles pequeños */
 @media (max-width: 640px) {
-  body::after{
+  body.watermark-visible::after {
     background-position: right -10vw top 24px;
     background-size: clamp(320px, 65vmin, 760px) !important;
-    opacity: .18;
+    opacity: 0.1 !important;
   }
 }
 
