@@ -1,6 +1,6 @@
 /* ====== CONFIG ====== */
 let API_URL = "https://TU-SERVICIO-EJEMPLO/api/precios";  // <-- tu endpoint real (JSON o CSV)
-const WA_NUMBER = "54911XXXXXXXX";                        // <-- tu WhatsApp en formato E.164 SIN '+'
+const WA_NUMBER = "5491164170916";                        // Número oficial de Corbalac en formato E.164 SIN '+'
 const STORE_NAME = "Corbalac";
 const FIELD_MAP = { name: null, price: null, category: null, unit: null, image: null };
 const qs = new URLSearchParams(location.search);
@@ -201,9 +201,24 @@ async function generatePDF(products) {
 // Compartir por WhatsApp (catálogo)
 function shareOnWhatsApp(event) {
   event.preventDefault();
-  const message = encodeURIComponent('Hola, te comparto la lista de precios de Corbalac:');
-  const pdfUrl = encodeURIComponent(window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf');
-  window.open(`https://wa.me/?text=${message}%20${pdfUrl}`, '_blank');
+  const pdfUrl = window.location.origin + '/assets/pdfs/lista-precios-corbalac.pdf';
+  const msg = `Hola, te comparto la lista de precios de Corbalac:\n${pdfUrl}`;
+  window.open(waContactLink(msg), '_blank');
+}
+
+// Abrir WhatsApp para solicitar cotización de catering
+function openCateringWhatsapp(event) {
+  if (event) event.preventDefault();
+  const today = new Date().toLocaleDateString('es-AR');
+  const msg = `*Solicitud de Cotización - Servicio de Catering* (${today})\n\n` +
+    `Hola ${STORE_NAME}, me gustaría solicitar una cotización para un evento:\n\n` +
+    `*Tipo de evento*: \n` +
+    `*Fecha y horario*: \n` +
+    `*Cantidad de personas*: \n` +
+    `*Lugar / Dirección*: \n` +
+    `*Preferencias/Observaciones*: (ej. vegetarianos, sin TACC, bebidas, postres, etc.)\n\n` +
+    `¿Podrían enviarme opciones de menú y precios? ¡Gracias!`;
+  window.open(waContactLink(msg), '_blank');
 }
 
 /* ====== SANDWICH MENU ====== */
@@ -238,17 +253,49 @@ function setupDailySpecial() {
   });
 }
 
+// Filtros para sección de Sándwiches (global)
+function initCategoryFilters() {
+  const filterButtons = document.querySelectorAll('.category-filter');
+  const sandwichItems = document.querySelectorAll('.sandwich-item');
+
+  if (!filterButtons.length || !sandwichItems.length) return;
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.category;
+
+      // Actualizar botón activo
+      filterButtons.forEach(btn => {
+        if (btn === button) {
+          btn.classList.remove('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
+          btn.classList.add('bg-amber-500', 'text-white');
+        } else {
+          btn.classList.remove('bg-amber-500', 'text-white');
+          btn.classList.add('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
+        }
+      });
+
+      // Filtrar ítems
+      sandwichItems.forEach(item => {
+        if (category === 'todos' || item.dataset.category === category) {
+          item.classList.remove('hidden');
+          item.style.animation = 'fadeIn 0.5s ease-in-out';
+        } else {
+          item.style.animation = 'fadeOut 0.3s ease-in-out';
+          setTimeout(() => {
+            item.classList.add('hidden');
+          }, 250);
+        }
+      });
+    });
+  });
+}
+
 // Botón flotante de WhatsApp
 function initWhatsAppButton() {
   const whatsappBtn = document.createElement('a');
-  whatsappBtn.href = 'https://wa.me/5491164170916?text=' + encodeURIComponent(
-    'Hola Corbalac, quisiera hacer un pedido de sándwiches:\n\n' +
-    '*Sabor*: \n' +
-    '*Cantidad*: \n' +
-    '*Dirección*: \n' +
-    '*Horario*: \n\n' +
-    '🍔🍟 ¡Gracias!'
-  );
+  const defaultMsg = 'Hola Corbalac, quisiera hacer una consulta:';
+  whatsappBtn.href = waContactLink(defaultMsg);
   whatsappBtn.target = '_blank';
   whatsappBtn.className = 'whatsapp-button';
   whatsappBtn.innerHTML = `
@@ -292,36 +339,336 @@ function initNavPill() {
   });
 }
 
-/* ====== Inicialización ====== */
-(async () => {
-  if (document.getElementById('sandwiches')) setupDailySpecial();
-  initWhatsAppButton();
+/* ====== Product Filtering ====== */
+function initProductFiltering() {
+  const filterButtons = document.querySelectorAll('.category-filter');
+  const productCards = document.querySelectorAll('.product-card');
 
-  if (document.getElementById("waBtn")) {
-    document.getElementById("waBtn").href = waContactLink();
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Update active state
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-white');
+        btn.classList.add('bg-white', 'border', 'hover:bg-gray-50', 'text-gray-700');
+      });
+      button.classList.remove('bg-white', 'border', 'hover:bg-gray-50', 'text-gray-700');
+      button.classList.add('bg-amber-500', 'text-white');
+
+      // Filter products
+      const category = button.dataset.category;
+      productCards.forEach(card => {
+        if (category === 'todos' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+/* ====== Shopping Cart ====== */
+let cart = [];
+
+function updateCartUI() {
+  const cartCount = document.getElementById('cart-count');
+  const cartBadge = document.getElementById('cart-badge');
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+ 
+  // Si la UI del carrito no existe en esta página, salir sin errores
+  if (!cartCount || !cartBadge || !cartItems || !cartTotal || !checkoutBtn) {
+    return;
   }
-  const shareBtn = document.getElementById("shareCatalog");
-  if (shareBtn) shareBtn.addEventListener('click', shareOnWhatsApp);
+  
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Tu carrito está vacío</p>';
+    cartCount.textContent = '0';
+    cartBadge.classList.add('hidden');
+    checkoutBtn.disabled = true;
+    cartTotal.textContent = '$0';
+    return;
+  }
 
-  // Año del footer
-  const y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
+  // Update cart items list
+  cartItems.innerHTML = '';
+  let total = 0;
+  
+  const groupedItems = cart.reduce((acc, item) => {
+    const key = `${item.name}-${item.price}`;
+    if (!acc[key]) {
+      acc[key] = { ...item, quantity: 1 };
+    } else {
+      acc[key].quantity += 1;
+    }
+    return acc;
+  }, {});
 
-  // Productos (solo si hay grilla/buscador en esta página)
-  const data = await fetchProducts();
-  if ($grid) render(data);
+  Object.values(groupedItems).forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    const itemElement = document.createElement('div');
+    itemElement.className = 'flex justify-between items-center py-3 border-b border-gray-100';
+    itemElement.innerHTML = `
+      <div class="flex-1">
+        <p class="font-medium text-gray-800">${item.name}</p>
+        <p class="text-sm text-gray-500">${fmtMoney(item.price)} c/u</p>
+      </div>
+      <div class="flex items-center">
+        <button class="decrease-item text-gray-500 hover:text-amber-600 p-1" data-name="${item.name}" data-price="${item.price}">
+          <i class="fas fa-minus text-xs"></i>
+        </button>
+        <span class="mx-2 w-6 text-center">${item.quantity}</span>
+        <button class="increase-item text-gray-500 hover:text-amber-600 p-1" data-name="${item.name}" data-price="${item.price}">
+          <i class="fas fa-plus text-xs"></i>
+        </button>
+        <span class="ml-4 w-20 text-right font-medium">${fmtMoney(itemTotal)}</span>
+      </div>
+    `;
+    cartItems.appendChild(itemElement);
+  });
 
-  const dl = document.getElementById('downloadPdf');
-  if (dl) {
-    dl.addEventListener('click', (e) => {
-      e.preventDefault();
-      generatePDF(data);
+  // Update cart summary
+  cartCount.textContent = cart.length;
+  cartBadge.textContent = cart.length;
+  cartBadge.classList.remove('hidden');
+  cartTotal.textContent = fmtMoney(total);
+  checkoutBtn.disabled = false;
+
+  // Add event listeners to quantity buttons
+  document.querySelectorAll('.increase-item').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const name = e.currentTarget.dataset.name;
+      const price = parseFloat(e.currentTarget.dataset.price);
+      addToCart({ name, price });
+    });
+  });
+
+  document.querySelectorAll('.decrease-item').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const name = e.currentTarget.dataset.name;
+      const price = parseFloat(e.currentTarget.dataset.price);
+      removeFromCart({ name, price });
+    });
+  });
+}
+
+function addToCart(item) {
+  cart.push(item);
+  updateCartUI();
+  showNotification(`${item.name} agregado al carrito`);
+}
+
+function removeFromCart(item) {
+  const index = cart.findIndex(cartItem => 
+    cartItem.name === item.name && cartItem.price === item.price
+  );
+  
+  if (index > -1) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+}
+
+function initCart() {
+  // Add to cart buttons
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const card = e.target.closest('.product-card');
+      const name = card.querySelector('h3').textContent;
+      const price = parseFloat(card.querySelector('span.text-lg').textContent.replace(/[^0-9.-]+/g,''));
+      
+      addToCart({ name, price });
+    });
+  });
+
+  // (Función de filtros trasladada a nivel global)
+
+// Cart toggle
+const cartButton = document.getElementById('cart-button');
+  const floatingCart = document.getElementById('floating-cart');
+  const closeCart = document.getElementById('close-cart');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const cartOverlay = document.getElementById('cart-overlay');
+
+  function toggleCart(show) {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      if (show) {
+        document.body.style.overflow = 'hidden';
+        floatingCart.classList.add('active');
+        if (cartOverlay) cartOverlay.classList.remove('hidden');
+      } else {
+        document.body.style.overflow = '';
+        floatingCart.classList.remove('active');
+        if (cartOverlay) cartOverlay.classList.add('hidden');
+      }
+    } else {
+      if (show) {
+        floatingCart.classList.remove('translate-y-20', 'opacity-0', 'invisible');
+      } else {
+        floatingCart.classList.add('translate-y-20', 'opacity-0', 'invisible');
+      }
+    }
+  }
+
+  if (cartButton && floatingCart) {
+    // Toggle cart on button click
+    cartButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isMobile = window.innerWidth <= 768;
+      const isOpen = isMobile 
+        ? floatingCart.classList.contains('active')
+        : !floatingCart.classList.contains('invisible');
+      
+      toggleCart(!isOpen);
+    });
+
+    // Close cart when clicking outside on desktop
+    if (!cartOverlay) {
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth > 768 && 
+            !floatingCart.contains(e.target) && 
+            !cartButton.contains(e.target)) {
+          toggleCart(false);
+        }
+      });
+    }
+  }
+
+  // Close cart when clicking overlay on mobile
+  if (cartOverlay) {
+    cartOverlay.addEventListener('click', () => toggleCart(false));
+  }
+
+  if (closeCart) {
+    closeCart.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleCart(false);
     });
   }
 
-  if ($search) {
-    $search.addEventListener('input', (e) => render(data, e.target.value));
+  // Checkout button
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      const today = new Date().toLocaleDateString('es-AR');
+      let message = `*NUEVO PEDIDO* - ${today}\n\n`;
+      message += `Hola ${STORE_NAME}, por favor necesito realizar el siguiente pedido:\n\n`;
+      message += `*Producto* | *Cantidad* | *Precio*\n`;
+      message += `--------------------------------\n`;
+      
+      const groupedItems = cart.reduce((acc, item) => {
+        const key = `${item.name}-${item.price}`;
+        if (!acc[key]) {
+          acc[key] = { ...item, quantity: 1 };
+        } else {
+          acc[key].quantity += 1;
+        }
+        return acc;
+      }, {});
+
+      let total = 0;
+      Object.values(groupedItems).forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        message += `${item.name} | ${item.quantity} ${item.quantity > 1 ? 'unidades' : 'unidad'} | ${fmtMoney(itemTotal)}\n`;
+      });
+
+      message += `\n*Total: ${fmtMoney(total)}*\n\n`;
+      message += `*Datos de entrega:*\n`;
+      message += `- Nombre: \n`;
+      message += `- Dirección: \n`;
+      message += `- Teléfono: \n`;
+      message += `- Horario de entrega: \n\n`;
+      message += `*Forma de pago:*\n`;
+      message += `- Efectivo\n`;
+      message += `- Transferencia\n`;
+      message += `- Otro (especificar): \n\n`;
+      message += `¡Muchas gracias!`;
+
+      window.open(waContactLink(message), '_blank');
+    });
   }
+}
+
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 z-50 animate-fade-in-up';
+  notification.innerHTML = `
+    <i class="fas fa-check-circle"></i>
+    <span>${message}</span>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.classList.add('opacity-0', 'translate-y-2');
+    notification.addEventListener('transitionend', () => {
+      notification.remove();
+    }, { once: true });
+  }, 3000);
+}
+
+/* ====== Inicialización ====== */
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize core functionality
+  initCart();
+  updateCartUI();
+  
+  // Initialize category filters if they exist
+  if (document.querySelector('.category-filter')) {
+    initCategoryFilters();
+  }
+  
+  // Initialize other components
+  // Se elimina initProductFiltering para evitar conflicto con filtros de sándwiches
+  // No es necesario volver a llamar a initCart()
+  if (document.getElementById('sandwiches')) setupDailySpecial();
+  initWhatsAppButton();
+
+  // Set up WhatsApp button
+  if (document.getElementById("waBtn")) {
+    document.getElementById("waBtn").href = waContactLink();
+  }
+  
+  // Set up share button
+  const shareBtn = document.getElementById("shareCatalog");
+  if (shareBtn) shareBtn.addEventListener('click', shareOnWhatsApp);
+
+  // Update footer year
+  const y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Load products asynchronously
+  const loadProducts = async () => {
+    try {
+      const data = await fetchProducts();
+      if ($grid) render(data);
+
+      const dl = document.getElementById('downloadPdf');
+      if (dl) {
+        dl.addEventListener('click', (e) => {
+          e.preventDefault();
+          generatePDF(data);
+        });
+      }
+
+      if ($search) {
+        $search.addEventListener('input', (e) => render(data, e.target.value));
+      }
+    } catch (error) {
+      console.error('Error al cargar los productos:', error);
+      if ($grid) {
+        $grid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500">Error al cargar los productos. Por favor, intente recargar la página.</div>';
+      }
+    }
+  };
+  
+  // Execute the async function
+  await loadProducts();
 
   // Smooth scroll nav (manteniendo tu offset de header)
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -338,4 +685,4 @@ function initNavPill() {
 
   // Navbar animación
   initNavPill();
-})();
+});
