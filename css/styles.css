@@ -506,6 +506,24 @@ input:focus:invalid, textarea:focus:invalid, select:focus:invalid { box-shadow: 
   body > *:not(::after){ position:relative; z-index:2; }
 }
 @media (max-width:640px){
+  /* Títulos más legibles y compactos en mobile pequeño */
+  h2 { font-size: 1.75rem; line-height: 2.1rem; }
+  h3 { font-size: 1.25rem; line-height: 1.6rem; }
+
+  /* Botones de filtro: mejor toque y legibilidad */
+  .category-filter {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  /* Botones principales: mayor área táctil */
+  .btn, .btn-primary, .btn-amber, .btn-wa {
+    padding: 0.75rem 1.1rem;
+    font-size: 1rem;
+  }
+
+  /* Flechas del carrusel: área táctil más cómoda */
+  .glide__arrow { padding: 0.6rem 0.8rem !important; }
   body.watermark-visible::after{
     background-position:right -10vw top 24px;
     background-size: clamp(320px, 65vmin, 760px) !important;
