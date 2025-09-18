@@ -2,6 +2,7 @@
 let API_URL = "https://TU-SERVICIO-EJEMPLO/api/precios";  // <-- tu endpoint real (JSON o CSV)
 const WA_NUMBER = "5491164170916";                        // Número oficial de Corbalac en formato E.164 SIN '+'
 const STORE_NAME = "Corbalac";
+const CASH_DISCOUNT = 0.10; // 10% de descuento en efectivo
 const FIELD_MAP = { name: null, price: null, category: null, unit: null, image: null };
 const qs = new URLSearchParams(location.search);
 if (qs.get("api")) API_URL = qs.get("api");
@@ -141,6 +142,8 @@ function renderSandwiches(items) {
     const icon = item.icon || 'fas fa-hamburger';
     const badge = item.badge || '';
     const price = typeof item.price === 'number' ? fmtMoney(item.price) : item.price;
+    const hasNumericPrice = typeof item.price === 'number' && !isNaN(item.price);
+    const cashPrice = hasNumericPrice ? fmtMoney(item.price * (1 - CASH_DISCOUNT)) : null;
     return `
       <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100" data-category="${item.category}">
         <div class="h-48 bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center">
@@ -153,9 +156,10 @@ function renderSandwiches(items) {
           </div>
           <p class="text-gray-600 text-sm mb-4">${item.description || ''}</p>
           <div class="flex items-center justify-between">
-            <div>
+            <div class="flex items-baseline gap-2">
               <span class="text-lg font-bold text-gray-900">${price}</span>
-              <span class="text-xs text-gray-500 ml-1">/unidad</span>
+              <span class="text-xs text-gray-500">/unidad</span>
+              ${cashPrice ? `<span class="text-sm text-green-600" title="Precio en efectivo">${cashPrice} en efectivo (-${Math.round(CASH_DISCOUNT*100)}%)</span>` : ''}
             </div>
           </div>
         </div>
