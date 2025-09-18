@@ -174,6 +174,8 @@ nav a:hover::after{
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
+  /* Ocultar links de navegación en mobile (se usa botón flotante) */
+  nav .nav-link { display: none; }
   
   .nav-link {
     padding: 0.75rem 1rem;
@@ -420,6 +422,27 @@ nav a:hover::after{
   font-size: 0.875rem;
 }
 
+/* ====== Footer hours alignment (compact) ====== */
+.footer-hours li {
+  display: grid;
+  grid-template-columns: auto auto; /* etiqueta y valor juntos */
+  justify-content: start;
+  align-items: center;
+  column-gap: 0.5rem; /* 8px */
+}
+.footer-hours .label {
+  display: inline-flex;
+  align-items: center;
+  min-width: 8ch; /* pedido del usuario */
+}
+.footer-hours .label i { margin-right: 0.5rem; }
+.footer-hours .value { white-space: nowrap; }
+
+@media (max-width: 360px) {
+  .footer-hours li { grid-template-columns: 1fr; row-gap: 0.25rem; }
+  .footer-hours .value { justify-self: start; white-space: normal; }
+}
+
 /* Hero, carrusel, secciones, tarjetas, formularios… (todo tu CSS existente) */
 .hero-grad{
   background:
@@ -471,6 +494,44 @@ input:focus:invalid, textarea:focus:invalid, select:focus:invalid { box-shadow: 
   0%{ transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,.7);}
   70%{ transform:scale(1.1); box-shadow:0 0 0 10px rgba(239,68,68,0);}
   100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,0);}
+}
+
+/* ====== Mobile Quick Nav (botón flotante de navegación) ====== */
+.mobile-quicknav {
+  position: fixed;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: calc(1rem + env(safe-area-inset-left));
+  z-index: 60;
+}
+.mobile-quicknav .mqn-toggle {
+  background: #111827; /* gray-900 */
+  color: #fff;
+  width: 3.25rem; height: 3.25rem;
+  min-width: 52px; min-height: 52px; /* tap target */
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.mobile-quicknav .mqn-toggle:hover { transform: scale(1.05); box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04); }
+.mobile-quicknav .mqn-toggle:focus-visible { outline: 3px solid #fcd34d; outline-offset: 3px; }
+
+.mobile-quicknav-panel {
+  position: absolute; bottom: calc(4rem + env(safe-area-inset-bottom)); left: 0;
+  background: #ffffff; border: 1px solid #f3f4f6; border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+  padding: 0.5rem; min-width: 12rem;
+}
+.mobile-quicknav-panel a {
+  display: flex; align-items: center; gap: .6rem;
+  padding: 0.7rem 0.9rem; border-radius: 0.5rem;
+  color: #1f2937; text-decoration: none; font-weight: 600;
+}
+.mobile-quicknav-panel a:hover { background: #f9fafb; }
+.mobile-quicknav-panel a i { color: #d97706; }
+
+@media (min-width: 769px) {
+  .mobile-quicknav { display: none; }
 }
 
 /* Impresión */

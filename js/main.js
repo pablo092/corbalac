@@ -378,6 +378,52 @@ function initWhatsAppButton() {
   document.body.appendChild(whatsappBtn);
 }
 
+// Navegación rápida móvil (botón flotante)
+function initMobileQuickNav() {
+  const toggle = document.getElementById('mqn-toggle');
+  const panel = document.getElementById('mqn-panel');
+  if (!toggle || !panel) return;
+
+  function open() {
+    panel.classList.remove('hidden');
+    toggle.setAttribute('aria-expanded', 'true');
+    const firstItem = panel.querySelector('a');
+    if (firstItem) firstItem.focus();
+    document.addEventListener('click', onDocClick, { capture: true });
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function close() {
+    panel.classList.add('hidden');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.removeEventListener('click', onDocClick, { capture: true });
+    document.removeEventListener('keydown', onKeydown);
+  }
+
+  function onDocClick(e) {
+    if (!panel.contains(e.target) && e.target !== toggle) close();
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') {
+      close();
+      toggle.focus();
+    }
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) close(); else open();
+  });
+
+  panel.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      close();
+    });
+  });
+}
+
 /* ====== NAVBAR: efecto "pill/notch" ====== */
 function initNavPill() {
   const host = document.querySelector('#mainNav .fx-nav');
@@ -701,6 +747,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // No es necesario volver a llamar a initCart()
   if (document.getElementById('sandwiches')) setupDailySpecial();
   initWhatsAppButton();
+  initMobileQuickNav();
 
   // Set up WhatsApp button
   if (document.getElementById("waBtn")) {

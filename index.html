@@ -291,27 +291,27 @@
             </div>
             Horario
           </h3>
-          <ul class="space-y-1.5 sm:space-y-2 text-gray-300 text-xs sm:text-sm">
-            <li class="flex justify-between items-center">
-              <span class="flex items-center">
+          <ul class="footer-hours space-y-1.5 sm:space-y-2 text-gray-300 text-xs sm:text-sm">
+            <li class="flex items-center justify-between gap-4">
+              <span class="label flex items-center">
                 <i class="fas fa-calendar-day text-amber-400 mr-2 w-4 text-center"></i>
                 Lun - Vie:
               </span>
-              <span class="font-medium text-white ml-2">9:00 - 17:00hs</span>
+              <span class="value font-medium text-white">9:00 - 17:00hs</span>
             </li>
-            <li class="flex justify-between items-center">
-              <span class="flex items-center">
+            <li class="flex items-center justify-between gap-4">
+              <span class="label flex items-center">
                 <i class="fas fa-calendar-day text-amber-400 mr-2 w-4 text-center"></i>
                 Sábados:
               </span>
-              <span class="font-medium text-white ml-2">10:00 - 13:00hs</span>
-            </li>
-            <li
-              class="text-amber-300 text-2xs sm:text-xs mt-1.5 sm:mt-2 flex items-center justify-center sm:justify-start">
-              <i class="fas fa-info-circle mr-1"></i>
-              Cerrado domingos y feriados
+              <span class="value font-medium text-white">10:00 - 13:00hs</span>
             </li>
           </ul>
+          <li
+            class="text-amber-300 text-2xs sm:text-xs mt-1.5 sm:mt-2 flex items-center justify-center sm:justify-start">
+            <i class="fas fa-info-circle mr-1"></i>
+            Cerrado domingos y feriados
+          </li>
         </div>
 
         <!-- Mapa -->
@@ -339,6 +339,18 @@
       </div>
     </div>
   </footer>
+
+  <!-- Mobile Quick Navigation -->
+  <div class="mobile-quicknav">
+    <button id="mqn-toggle" class="mqn-toggle" aria-label="Abrir navegación rápida" aria-expanded="false" aria-controls="mqn-panel">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div id="mqn-panel" class="mobile-quicknav-panel hidden" role="menu" aria-labelledby="mqn-toggle">
+      <a href="#distribuidora" role="menuitem"><i class="fas fa-store-alt"></i> Distribuidora</a>
+      <a href="#seleccion" role="menuitem"><i class="fas fa-utensils"></i> Selección</a>
+      <a href="#catering" role="menuitem"><i class="fas fa-concierge-bell"></i> Catering</a>
+    </div>
+  </div>
 
   <!-- Main JavaScript -->
   <!-- Floating Icon -->
