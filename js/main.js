@@ -37,6 +37,7 @@ Ej: Queso Tybo | 2 kg |
 const $search  = document.getElementById('search');
 const $grid    = document.getElementById('grid');
 const $updated = document.getElementById('updatedAt');
+const $sandwichGrid = document.getElementById('sandwich-grid');
 
 function fmtMoney(n) {
   try {
@@ -131,6 +132,36 @@ function render(products, query = '') {
       </div>
     </div>
   `).join('');
+}
+
+// Render dinámico de sándwiches a partir de window.SANDWICHES
+function renderSandwiches(items) {
+  if (!$sandwichGrid || !Array.isArray(items)) return;
+  $sandwichGrid.innerHTML = items.map(item => {
+    const icon = item.icon || 'fas fa-hamburger';
+    const badge = item.badge || '';
+    const price = typeof item.price === 'number' ? fmtMoney(item.price) : item.price;
+    return `
+      <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100" data-category="${item.category}">
+        <div class="h-48 bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center">
+          <i class="${icon} text-6xl text-amber-400"></i>
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-xl font-bold text-gray-900">${item.name}</h3>
+            ${badge ? `<span class="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${badge}</span>` : ''}
+          </div>
+          <p class="text-gray-600 text-sm mb-4">${item.description || ''}</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-lg font-bold text-gray-900">${price}</span>
+              <span class="text-xs text-gray-500 ml-1">/unidad</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 /* ====== PDF GENERATION ====== */
@@ -260,33 +291,73 @@ function initCategoryFilters() {
 
   if (!filterButtons.length || !sandwichItems.length) return;
 
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setActiveButton(activeBtn) {
+    filterButtons.forEach(btn => {
+      const isActive = btn === activeBtn;
+      btn.setAttribute('aria-pressed', String(isActive));
+      btn.tabIndex = isActive ? 0 : -1;
+      if (isActive) {
+        btn.classList.remove('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
+        btn.classList.add('bg-amber-500', 'text-white');
+      } else {
+        btn.classList.remove('bg-amber-500', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
+      }
+    });
+  }
+
+  function applyFilter(category) {
+    sandwichItems.forEach(item => {
+      const show = (category === 'todos' || item.dataset.category === category);
+      if (show) {
+        item.classList.remove('hidden');
+        if (!prefersReduced) item.style.animation = 'fadeIn 0.5s ease-in-out';
+      } else {
+        if (!prefersReduced) item.style.animation = 'fadeOut 0.25s ease-in-out';
+        setTimeout(() => { item.classList.add('hidden'); }, prefersReduced ? 0 : 200);
+      }
+    });
+  }
+
+  // Default active: "todos" si existe, sino el primero
+  const defaultBtn = Array.from(filterButtons).find(b => b.dataset.category === 'todos') || filterButtons[0];
+  if (defaultBtn) {
+    setActiveButton(defaultBtn);
+    applyFilter(defaultBtn.dataset.category);
+  }
+
   filterButtons.forEach(button => {
+    // Inicializar atributos ARIA/rol si faltan
+    if (!button.hasAttribute('role')) button.setAttribute('role', 'tab');
+    if (!button.hasAttribute('aria-pressed')) button.setAttribute('aria-pressed', 'false');
+    if (!button.hasAttribute('tabindex')) button.tabIndex = -1;
+
     button.addEventListener('click', () => {
-      const category = button.dataset.category;
+      setActiveButton(button);
+      applyFilter(button.dataset.category);
+    });
 
-      // Actualizar botón activo
-      filterButtons.forEach(btn => {
-        if (btn === button) {
-          btn.classList.remove('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
-          btn.classList.add('bg-amber-500', 'text-white');
-        } else {
-          btn.classList.remove('bg-amber-500', 'text-white');
-          btn.classList.add('bg-gray-100', 'text-gray-800', 'hover:bg-gray-200');
-        }
-      });
-
-      // Filtrar ítems
-      sandwichItems.forEach(item => {
-        if (category === 'todos' || item.dataset.category === category) {
-          item.classList.remove('hidden');
-          item.style.animation = 'fadeIn 0.5s ease-in-out';
-        } else {
-          item.style.animation = 'fadeOut 0.3s ease-in-out';
-          setTimeout(() => {
-            item.classList.add('hidden');
-          }, 250);
-        }
-      });
+    // Navegación por teclado (flechas y Home/End)
+    button.addEventListener('keydown', (e) => {
+      const idx = Array.from(filterButtons).indexOf(button);
+      let nextIdx = idx;
+      if (e.key === 'ArrowRight') nextIdx = (idx + 1) % filterButtons.length;
+      else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + filterButtons.length) % filterButtons.length;
+      else if (e.key === 'Home') nextIdx = 0;
+      else if (e.key === 'End') nextIdx = filterButtons.length - 1;
+      else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        setActiveButton(button);
+        applyFilter(button.dataset.category);
+        return;
+      } else { return; }
+      e.preventDefault();
+      const target = filterButtons[nextIdx];
+      target.focus();
+      setActiveButton(target);
+      applyFilter(target.dataset.category);
     });
   });
 }
@@ -617,11 +688,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Initialize core functionality
   initCart();
   updateCartUI();
-  
+
   // Initialize category filters if they exist
-  if (document.querySelector('.category-filter')) {
-    initCategoryFilters();
+  // Render sandwiches from data source (local array for now)
+  if (window.SANDWICHES && Array.isArray(window.SANDWICHES)) {
+    renderSandwiches(window.SANDWICHES);
   }
+  if (document.querySelector('.category-filter')) initCategoryFilters();
   
   // Initialize other components
   // Se elimina initProductFiltering para evitar conflicto con filtros de sándwiches

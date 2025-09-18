@@ -302,6 +302,25 @@ nav a:hover::after{
   transform: translateY(-1px);
 }
 
+/* Accesibilidad: foco visible en filtros y enlaces de navegación */
+.category-filter:focus-visible,
+.nav-link:focus-visible,
+.btn:focus-visible,
+.btn-primary:focus-visible,
+.btn-amber:focus-visible,
+.btn-wa:focus-visible {
+  outline: 3px solid #fcd34d; /* amber-300 */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(253, 230, 138, 0.35);
+}
+
+/* Accesibilidad: foco en botón flotante de WhatsApp */
+.whatsapp-button:focus-visible {
+  outline: 3px solid #fcd34d;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(253, 230, 138, 0.35);
+}
+
 /* Shopping Cart */
 #floating-cart {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -418,6 +437,16 @@ section { scroll-margin-top: 80px; transition: all .3s ease-in-out; }
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0,0,0,.08);
   transition: transform .3s ease, box-shadow .3s ease;
+}
+
+/* Respeto por preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .product-card:hover { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
 }
 
 /* Formularios */
