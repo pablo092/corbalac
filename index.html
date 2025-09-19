@@ -18,10 +18,16 @@
   <!-- Header -->
   <header class="bg-white text-gray-900 shadow-lg">
     <!-- Logo Principal Centrado - Pantalla Completa -->
-    <div class="w-full min-h-[8vh] md:min-h-[20vh] flex items-start justify-center bg-white">
+    <div class="w-full min-h-40svh md:min-h-[20vh] flex items-center md:items-start justify-center bg-white">
       <div class="text-center px-4 w-full">
-        <img src="icon.png" alt="Logo Corbalac" class="mx-auto w-full max-w-[240px] md:max-w-lg animate-fade-in"
+        <img src="icon.png" alt="Logo Corbalac" class="mx-auto w-auto h-40svh max-w-[90vw] md:h-auto md:w-full md:max-w-lg animate-fade-in object-contain"
           loading="eager" decoding="async" style="animation: fadeIn 1.5s ease-in-out;" />
+      </div>
+    </div>
+    <!-- Separador Opción 1: línea sutil con degradé -->
+    <div class="w-full bg-white">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="h-[2px] bg-gradient-to-r from-transparent via-amber-200 to-transparent rounded-full"></div>
       </div>
     </div>
 
@@ -51,7 +57,17 @@
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center max-w-4xl mx-auto mb-12">
         <h2 class="text-4xl font-bold text-brand-dark mb-4">Distribuidora Mayorista</h2>
-        <p class="text-lg text-gray-600 mb-8">Precios especiales por volumen y pago en efectivo/transferencia.</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+          <a href="assets/pdfs/lista-precios-corbalac.pdf" download="Lista-de-Precios-Corbalac.pdf"
+            class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" aria-label="Descargar lista de precios" title="Descargar lista de precios">
+            <i class="fas fa-file-download"></i> Descargar Lista de Precios
+          </a>
+          <!-- <a href="#" id="shareCatalog"
+            class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            onclick="shareOnWhatsApp(event)">
+            <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+          </a> -->
+        </div>
 
         <!-- Categorías de Productos -->
         <div class="grid md:grid-cols-2 gap-8 mb-12" aria-label="Categorías de productos mayoristas">
@@ -103,17 +119,6 @@
         </div>
       </div>
 
-    </div>
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-      <a href="assets/pdfs/lista-precios-corbalac.pdf" download="Lista-de-Precios-Corbalac.pdf"
-        class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" aria-label="Descargar lista de precios" title="Descargar lista de precios">
-        <i class="fas fa-file-download"></i> Descargar Lista de Precios
-      </a>
-      <!-- <a href="#" id="shareCatalog"
-        class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-        onclick="shareOnWhatsApp(event)">
-        <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
-      </a> -->
     </div>
   </section>
 
@@ -257,7 +262,7 @@
       </div>
 
       <!-- Secciones de Información -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-8 mb-6 sm:mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-8 mb-6 sm:mb-8 place-items-center sm:place-items-start">
         <!-- Contacto -->
         <div class="text-center sm:text-left">
           <h3 class="text-base sm:text-lg font-bold mb-3 sm:mb-4 flex items-center justify-center sm:justify-start">
@@ -292,14 +297,14 @@
             Horario
           </h3>
           <ul class="footer-hours space-y-1.5 sm:space-y-2 text-gray-300 text-xs sm:text-sm">
-            <li class="flex items-center justify-between gap-4">
+            <li class="flex items-center justify-center sm:justify-between gap-4 text-center sm:text-left">
               <span class="label flex items-center">
                 <i class="fas fa-calendar-day text-amber-400 mr-2 w-4 text-center"></i>
                 Lun - Vie:
               </span>
               <span class="value font-medium text-white">9:00 - 17:00hs</span>
             </li>
-            <li class="flex items-center justify-between gap-4">
+            <li class="flex items-center justify-center sm:justify-between gap-4 text-center sm:text-left">
               <span class="label flex items-center">
                 <i class="fas fa-calendar-day text-amber-400 mr-2 w-4 text-center"></i>
                 Sábados:
@@ -307,11 +312,6 @@
               <span class="value font-medium text-white">10:00 - 13:00hs</span>
             </li>
           </ul>
-          <li
-            class="text-amber-300 text-2xs sm:text-xs mt-1.5 sm:mt-2 flex items-center justify-center sm:justify-start">
-            <i class="fas fa-info-circle mr-1"></i>
-            Cerrado domingos y feriados
-          </li>
         </div>
 
         <!-- Mapa -->
@@ -353,13 +353,6 @@
   </div>
 
   <!-- Main JavaScript -->
-  <!-- Floating Icon -->
-  <div id="floatingIcon" class="fixed bottom-8 right-8 z-50 opacity-0 transition-opacity duration-500">
-    <a href="#"
-      class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110">
-      <i class="fas fa-arrow-up text-xl"></i>
-    </a>
-  </div>
 
   <!-- Glide JS -->
   <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/glide.min.js"></script>

@@ -258,6 +258,10 @@ nav a:hover::after{
   .whatsapp-button i {
     font-size: 1.5rem;
   }
+
+  /* Mobile viewport height utilities (fallback -> modern) */
+  .min-h-40svh { min-height: 40vh; min-height: 40svh; }
+  .h-40svh { height: 40vh; height: 40svh; }
 }
 
 /* =========================
@@ -443,6 +447,25 @@ nav a:hover::after{
   .footer-hours .value { justify-self: start; white-space: normal; }
 }
 
+/* Alineación del footer en mobile: centrar horarios y contenido */
+@media (max-width: 768px) {
+  .footer-hours li {
+    grid-template-columns: 1fr; /* apilar etiqueta y valor */
+    justify-content: center;
+    justify-items: center; /* centrar cada celda */
+    text-align: center;
+    row-gap: 0.25rem;
+  }
+  .footer-hours .label {
+    justify-content: center;
+    min-width: auto; /* liberar ancho mínimo para centrar mejor */
+  }
+  .footer-hours .value {
+    justify-self: center;
+    white-space: nowrap; /* evitar saltos raros */
+  }
+}
+
 /* Hero, carrusel, secciones, tarjetas, formularios… (todo tu CSS existente) */
 .hero-grad{
   background:
@@ -477,15 +500,16 @@ section { scroll-margin-top: 80px; transition: all .3s ease-in-out; }
 input:invalid, textarea:invalid, select:invalid { border-color: #f87171; }
 input:focus:invalid, textarea:focus:invalid, select:focus:invalid { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2); }
 
-/* WhatsApp Button */
+/* WhatsApp Button (diseño anterior simple) */
 @keyframes float { 0%{transform:translateY(0)} 50%{transform:translateY(-5px)} 100%{transform:translateY(0)} }
 .whatsapp-button{
   position:fixed; bottom:1.5rem; right:1.5rem; z-index:50; background:#25D366; color:#fff;
   width:3.5rem; height:3.5rem; border-radius:9999px; display:flex; align-items:center; justify-content:center;
+  padding: 0; box-sizing: border-box;
   box-shadow:0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05); transition:all .3s;
 }
 .whatsapp-button:hover{ background:#128C7E; transform:scale(1.1); box-shadow:0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04); }
-.whatsapp-button i{ font-size:1.5rem; }
+.whatsapp-button i{ font-size:1.5rem; line-height: 1; display: block; }
 .whatsapp-notification{
   position:absolute; top:-.25rem; right:-.25rem; background:#EF4444; color:#fff; font-size:.75rem; font-weight:700;
   border-radius:9999px; width:1.25rem; height:1.25rem; display:flex; align-items:center; justify-content:center; animation:pulse 2s infinite;
@@ -495,6 +519,9 @@ input:focus:invalid, textarea:focus:invalid, select:focus:invalid { box-shadow: 
   70%{ transform:scale(1.1); box-shadow:0 0 0 10px rgba(239,68,68,0);}
   100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,0);}
 }
+
+/* Animación opcional */
+.float-animation{ animation: float 2s ease-in-out infinite; }
 
 /* ====== Mobile Quick Nav (botón flotante de navegación) ====== */
 .mobile-quicknav {

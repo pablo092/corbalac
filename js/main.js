@@ -372,9 +372,13 @@ function initWhatsAppButton() {
   const defaultMsg = 'Hola Corbalac, quisiera hacer una consulta:';
   whatsappBtn.href = waContactLink(defaultMsg);
   whatsappBtn.target = '_blank';
+  whatsappBtn.rel = 'noopener noreferrer';
+  whatsappBtn.setAttribute('aria-label', 'Abrir chat de WhatsApp con Corbalac');
+  whatsappBtn.setAttribute('title', 'Chatear por WhatsApp');
+  whatsappBtn.setAttribute('role', 'button');
   whatsappBtn.className = 'whatsapp-button';
   whatsappBtn.innerHTML = `
-    <i class="fab fa-whatsapp"></i>
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
     <span class="whatsapp-notification">!</span>
   `;
   whatsappBtn.addEventListener('mouseenter', function(){ this.classList.add('float-animation'); });
