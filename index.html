@@ -172,7 +172,7 @@
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">Ofrecemos servicios de catering para todo tipo de eventos.
           Desde fiestas privadas hasta eventos corporativos, nos adaptamos a tus necesidades.</p>
         <div class="mt-12 text-center">
-          <a href="#" onclick="openCateringWhatsapp(event)"
+          <a href="#" id="cateringQuote"
             class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-colors transform hover:scale-105" aria-label="Solicitar cotización por WhatsApp" title="Solicitar cotización por WhatsApp">
             Solicitar Cotización
           </a>
@@ -363,70 +363,6 @@
   <!-- Main JavaScript -->
   <script src="js/main.js"></script>
 
-  <!-- Glide initialization -->
-  <script>
-    // Initialize Glide carousel after the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', function () {
-      if (document.querySelector('.glide')) {
-        new Glide('.glide', {
-          type: 'carousel',
-          perView: 1,
-          focusAt: 'center',
-          gap: 24,
-          autoplay: 4000,
-          hoverpause: true,
-          breakpoints: {
-            1024: { perView: 1 },
-            768: { perView: 1 }
-          }
-        }).mount();
-      }
-    });
-  </script>
-  <script>
-    // Floating icon and watermark scroll behavior
-    document.addEventListener('DOMContentLoaded', function () {
-      const floatingIcon = document.getElementById('floatingIcon');
-      let hasScrolled = false;
-      let watermarkShown = false;
-
-      window.addEventListener('scroll', function () {
-        // Show floating icon after first scroll
-        if (!hasScrolled) {
-          hasScrolled = true;
-          floatingIcon.classList.remove('opacity-0');
-          floatingIcon.classList.add('opacity-100');
-        }
-
-        // Show/hide elements based on scroll position
-        if (window.scrollY > 300) {
-          // Show floating icon when scrolled down
-          floatingIcon.classList.remove('opacity-0');
-          floatingIcon.classList.add('opacity-100');
-
-          // Show watermark when scrolled down past 300px
-          document.body.classList.add('watermark-visible');
-          watermarkShown = true;
-        } else {
-          // Hide floating icon when at the top
-          floatingIcon.classList.add('opacity-0');
-          floatingIcon.classList.remove('opacity-100');
-
-          // Hide watermark when scrolled back to top
-          document.body.classList.remove('watermark-visible');
-        }
-      });
-
-      // Smooth scroll to top
-      floatingIcon.addEventListener('click', function (e) {
-        e.preventDefault();
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      });
-    });
-  </script>
 </body>
 
 </html>

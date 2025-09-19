@@ -34,6 +34,68 @@ Ej: Queso Tybo | 2 kg |
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
+/* ====== Glide Carousel ====== */
+function initGlideCarousel() {
+  try {
+    if (typeof Glide === 'undefined') return; // glide library not loaded
+    if (!document.querySelector('.glide')) return;
+    const glide = new Glide('.glide', {
+      type: 'carousel',
+      perView: 1,
+      focusAt: 'center',
+      gap: 24,
+      autoplay: 4000,
+      hoverpause: true,
+      breakpoints: {
+        1024: { perView: 1 },
+        768: { perView: 1 }
+      }
+    });
+    glide.mount();
+  } catch (e) {
+    console.warn('Glide init skipped:', e);
+  }
+}
+
+/* ====== Watermark and Floating Top Icon (optional) ====== */
+function initWatermarkAndScrollIcon() {
+  const floatingIcon = document.getElementById('floatingIcon');
+  let hasScrolled = false;
+
+  function onScroll() {
+    // Handle floating icon visibility if present
+    if (floatingIcon) {
+      if (!hasScrolled) {
+        hasScrolled = true;
+        floatingIcon.classList.remove('opacity-0');
+        floatingIcon.classList.add('opacity-100');
+      }
+      if (window.scrollY > 300) {
+        floatingIcon.classList.remove('opacity-0');
+        floatingIcon.classList.add('opacity-100');
+      } else {
+        floatingIcon.classList.add('opacity-0');
+        floatingIcon.classList.remove('opacity-100');
+      }
+    }
+    // Watermark toggle independent of icon existence
+    if (window.scrollY > 300) {
+      document.body.classList.add('watermark-visible');
+    } else {
+      document.body.classList.remove('watermark-visible');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll);
+
+  if (floatingIcon) {
+    floatingIcon.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+}
+
 /* ====== CATÁLOGO ====== */
 const $search  = document.getElementById('search');
 const $grid    = document.getElementById('grid');
@@ -756,6 +818,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (document.getElementById('sandwiches')) setupDailySpecial();
   initWhatsAppButton();
   initMobileQuickNav();
+  initGlideCarousel();
+  initWatermarkAndScrollIcon();
 
   // Set up WhatsApp button
   if (document.getElementById("waBtn")) {
@@ -765,6 +829,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Set up share button
   const shareBtn = document.getElementById("shareCatalog");
   if (shareBtn) shareBtn.addEventListener('click', shareOnWhatsApp);
+
+  // Catering WhatsApp (mover inline onclick)
+  const cateringQuote = document.getElementById('cateringQuote');
+  if (cateringQuote) {
+    cateringQuote.addEventListener('click', openCateringWhatsapp);
+  }
 
   // Update footer year
   const y = document.getElementById('year');
