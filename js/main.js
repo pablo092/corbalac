@@ -206,23 +206,36 @@ function renderSandwiches(items) {
     const price = typeof item.price === 'number' ? fmtMoney(item.price) : item.price;
     const hasNumericPrice = typeof item.price === 'number' && !isNaN(item.price);
     const cashPrice = hasNumericPrice ? fmtMoney(item.price * (1 - CASH_DISCOUNT)) : null;
+
+    const imageHtml = item.image
+      ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">`
+      : `<div class="w-full h-full flex items-center justify-center"><i class="${icon} text-6xl text-amber-400"></i></div>`;
+
     return `
-      <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100" data-category="${item.category}">
-        <div class="h-48 bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center">
-          <i class="${icon} text-6xl text-amber-400"></i>
+      <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group" data-category="${item.category}">
+        <div class="h-56 bg-gray-100 overflow-hidden relative">
+          ${imageHtml}
+          ${badge ? `<span class="absolute top-4 right-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">${badge}</span>` : ''}
         </div>
-        <div class="p-5">
-          <div class="flex justify-between items-start mb-2">
-            <h3 class="text-xl font-bold text-gray-900">${item.name}</h3>
-            ${badge ? `<span class="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${badge}</span>` : ''}
+        <div class="p-6">
+          <div class="mb-3">
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors">${item.name}</h3>
           </div>
-          <p class="text-gray-600 text-sm mb-4">${item.description || ''}</p>
-          <div class="flex items-center justify-between">
-            <div class="flex items-baseline gap-2">
-              <span class="text-lg font-bold text-gray-900">${price}</span>
+          <p class="text-gray-600 text-sm mb-4 line-clamp-2">${item.description || ''}</p>
+          <div class="flex flex-col gap-1">
+            <div class="flex items-baseline justify-between">
+              <span class="text-2xl font-bold text-brand-dark">${price}</span>
               <span class="text-xs text-gray-500">/unidad</span>
-              ${cashPrice ? `<span class="text-sm text-green-600" title="Precio en efectivo">${cashPrice} en efectivo (-${Math.round(CASH_DISCOUNT * 100)}%)</span>` : ''}
             </div>
+            ${cashPrice ? `<div class="text-sm text-green-600 font-medium flex items-center gap-1"><i class="fas fa-money-bill-wave"></i> ${cashPrice} efectivo</div>` : ''}
+          </div>
+          
+          <div class="mt-5 pt-4 border-t border-gray-100 flex gap-2">
+             <a href="https://wa.me/${WA_NUMBER}?text=Hola!%20Quiero%20pedir%20un%20${encodeURIComponent(item.name)}" 
+                target="_blank"
+                class="flex-1 bg-brand-dark hover:bg-gray-800 text-white text-sm font-bold py-2 px-4 rounded-lg text-center transition-colors">
+                Pedir
+             </a>
           </div>
         </div>
       </div>
