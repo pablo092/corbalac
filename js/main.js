@@ -97,8 +97,8 @@ function initWatermarkAndScrollIcon() {
 }
 
 /* ====== CATÁLOGO ====== */
-const $search  = document.getElementById('search');
-const $grid    = document.getElementById('grid');
+const $search = document.getElementById('search');
+const $grid = document.getElementById('grid');
 const $updated = document.getElementById('updatedAt');
 const $sandwichGrid = document.getElementById('sandwich-grid');
 
@@ -168,9 +168,9 @@ function render(products, query = '') {
   const filtered = q === ''
     ? products
     : products.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        (p.category && p.category.toLowerCase().includes(q))
-      );
+      p.name.toLowerCase().includes(q) ||
+      (p.category && p.category.toLowerCase().includes(q))
+    );
 
   if (filtered.length === 0) {
     $grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No hay resultados para "${q}"</div>`;
@@ -180,8 +180,8 @@ function render(products, query = '') {
   $grid.innerHTML = filtered.map(p => `
     <div class="product-card bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300">
       <div class="h-48 bg-gray-100 overflow-hidden">
-        ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">` : 
-          `<div class="w-full h-full flex items-center justify-center text-gray-400">
+        ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">` :
+      `<div class="w-full h-full flex items-center justify-center text-gray-400">
             <i class="fas fa-image text-4xl"></i>
           </div>`}
       </div>
@@ -221,7 +221,7 @@ function renderSandwiches(items) {
             <div class="flex items-baseline gap-2">
               <span class="text-lg font-bold text-gray-900">${price}</span>
               <span class="text-xs text-gray-500">/unidad</span>
-              ${cashPrice ? `<span class="text-sm text-green-600" title="Precio en efectivo">${cashPrice} en efectivo (-${Math.round(CASH_DISCOUNT*100)}%)</span>` : ''}
+              ${cashPrice ? `<span class="text-sm text-green-600" title="Precio en efectivo">${cashPrice} en efectivo (-${Math.round(CASH_DISCOUNT * 100)}%)</span>` : ''}
             </div>
           </div>
         </div>
@@ -321,13 +321,13 @@ function openCateringWhatsapp(event) {
 /* ====== SANDWICH MENU ====== */
 function setupDailySpecial() {
   const specials = [
-    { name: 'Milanesa Clásica',      description: '¡Todos los Lunes!',     price: '2,880', originalPrice: '3,200', discount: '10%' },
-    { name: 'Jamón Crudo y Queso',   description: '¡Todos los Martes!',    price: '3,150', originalPrice: '3,500', discount: '10%' },
-    { name: 'Pollo Grillado',        description: '¡Miércoles de Pollo!',  price: '2,790', originalPrice: '3,100', discount: '10%' },
-    { name: 'Vegetariano Especial',  description: '¡Jueves Verde!',        price: '2,970', originalPrice: '3,300', discount: '10%' },
-    { name: 'Milanesa Napolitana',   description: '¡Viernes de Milanesa!', price: '3,150', originalPrice: '3,500', discount: '10%' },
-    { name: 'Lomito Completo',       description: '¡Sábado Especial!',     price: '3,510', originalPrice: '3,900', discount: '10%' },
-    { name: 'Sandwich de Bondiola',  description: '¡Domingo Familiar!',    price: '3,240', originalPrice: '3,600', discount: '10%' }
+    { name: 'Milanesa Clásica', description: '¡Todos los Lunes!', price: '2,880', originalPrice: '3,200', discount: '10%' },
+    { name: 'Jamón Crudo y Queso', description: '¡Todos los Martes!', price: '3,150', originalPrice: '3,500', discount: '10%' },
+    { name: 'Pollo Grillado', description: '¡Miércoles de Pollo!', price: '2,790', originalPrice: '3,100', discount: '10%' },
+    { name: 'Vegetariano Especial', description: '¡Jueves Verde!', price: '2,970', originalPrice: '3,300', discount: '10%' },
+    { name: 'Milanesa Napolitana', description: '¡Viernes de Milanesa!', price: '3,150', originalPrice: '3,500', discount: '10%' },
+    { name: 'Lomito Completo', description: '¡Sábado Especial!', price: '3,510', originalPrice: '3,900', discount: '10%' },
+    { name: 'Sandwich de Bondiola', description: '¡Domingo Familiar!', price: '3,240', originalPrice: '3,600', discount: '10%' }
   ];
 
   const todaySpecial = specials[new Date().getDay()];
@@ -441,10 +441,9 @@ function initWhatsAppButton() {
   whatsappBtn.className = 'whatsapp-button';
   whatsappBtn.innerHTML = `
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
-    <span class="whatsapp-notification">!</span>
   `;
-  whatsappBtn.addEventListener('mouseenter', function(){ this.classList.add('float-animation'); });
-  whatsappBtn.addEventListener('mouseleave', function(){ this.classList.remove('float-animation'); });
+  whatsappBtn.addEventListener('mouseenter', function () { this.classList.add('float-animation'); });
+  whatsappBtn.addEventListener('mouseleave', function () { this.classList.remove('float-animation'); });
   document.body.appendChild(whatsappBtn);
 }
 
@@ -502,10 +501,10 @@ function initNavPill() {
   const notch = host.querySelector('.fx-notch');
   const items = Array.from(host.querySelectorAll('.fx-item'));
 
-  function moveTo(el){
+  function moveTo(el) {
     const nb = host.getBoundingClientRect();
-    const b  = el.getBoundingClientRect();
-    const x  = (b.left - nb.left) + host.scrollLeft; // soporta overflow-x
+    const b = el.getBoundingClientRect();
+    const x = (b.left - nb.left) + host.scrollLeft; // soporta overflow-x
     notch.style.setProperty('--x', x + 'px');
     notch.style.setProperty('--w', b.width + 'px');
     items.forEach(a => a.classList.remove('active'));
@@ -563,12 +562,12 @@ function updateCartUI() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
   const checkoutBtn = document.getElementById('checkout-btn');
- 
+
   // Si la UI del carrito no existe en esta página, salir sin errores
   if (!cartCount || !cartBadge || !cartItems || !cartTotal || !checkoutBtn) {
     return;
   }
-  
+
   if (cart.length === 0) {
     cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Tu carrito está vacío</p>';
     cartCount.textContent = '0';
@@ -581,7 +580,7 @@ function updateCartUI() {
   // Update cart items list
   cartItems.innerHTML = '';
   let total = 0;
-  
+
   const groupedItems = cart.reduce((acc, item) => {
     const key = `${item.name}-${item.price}`;
     if (!acc[key]) {
@@ -595,7 +594,7 @@ function updateCartUI() {
   Object.values(groupedItems).forEach(item => {
     const itemTotal = item.price * item.quantity;
     total += itemTotal;
-    
+
     const itemElement = document.createElement('div');
     itemElement.className = 'flex justify-between items-center py-3 border-b border-gray-100';
     itemElement.innerHTML = `
@@ -649,10 +648,10 @@ function addToCart(item) {
 }
 
 function removeFromCart(item) {
-  const index = cart.findIndex(cartItem => 
+  const index = cart.findIndex(cartItem =>
     cartItem.name === item.name && cartItem.price === item.price
   );
-  
+
   if (index > -1) {
     cart.splice(index, 1);
     updateCartUI();
@@ -665,16 +664,16 @@ function initCart() {
     button.addEventListener('click', (e) => {
       const card = e.target.closest('.product-card');
       const name = card.querySelector('h3').textContent;
-      const price = parseFloat(card.querySelector('span.text-lg').textContent.replace(/[^0-9.-]+/g,''));
-      
+      const price = parseFloat(card.querySelector('span.text-lg').textContent.replace(/[^0-9.-]+/g, ''));
+
       addToCart({ name, price });
     });
   });
 
   // (Función de filtros trasladada a nivel global)
 
-// Cart toggle
-const cartButton = document.getElementById('cart-button');
+  // Cart toggle
+  const cartButton = document.getElementById('cart-button');
   const floatingCart = document.getElementById('floating-cart');
   const closeCart = document.getElementById('close-cart');
   const checkoutBtn = document.getElementById('checkout-btn');
@@ -682,7 +681,7 @@ const cartButton = document.getElementById('cart-button');
 
   function toggleCart(show) {
     const isMobile = window.innerWidth <= 768;
-    
+
     if (isMobile) {
       if (show) {
         document.body.style.overflow = 'hidden';
@@ -707,19 +706,19 @@ const cartButton = document.getElementById('cart-button');
     cartButton.addEventListener('click', (e) => {
       e.stopPropagation();
       const isMobile = window.innerWidth <= 768;
-      const isOpen = isMobile 
+      const isOpen = isMobile
         ? floatingCart.classList.contains('active')
         : !floatingCart.classList.contains('invisible');
-      
+
       toggleCart(!isOpen);
     });
 
     // Close cart when clicking outside on desktop
     if (!cartOverlay) {
       document.addEventListener('click', (e) => {
-        if (window.innerWidth > 768 && 
-            !floatingCart.contains(e.target) && 
-            !cartButton.contains(e.target)) {
+        if (window.innerWidth > 768 &&
+          !floatingCart.contains(e.target) &&
+          !cartButton.contains(e.target)) {
           toggleCart(false);
         }
       });
@@ -746,7 +745,7 @@ const cartButton = document.getElementById('cart-button');
       message += `Hola ${STORE_NAME}, por favor necesito realizar el siguiente pedido:\n\n`;
       message += `*Producto* | *Cantidad* | *Precio*\n`;
       message += `--------------------------------\n`;
-      
+
       const groupedItems = cart.reduce((acc, item) => {
         const key = `${item.name}-${item.price}`;
         if (!acc[key]) {
@@ -788,9 +787,9 @@ function showNotification(message) {
     <i class="fas fa-check-circle"></i>
     <span>${message}</span>
   `;
-  
+
   document.body.appendChild(notification);
-  
+
   setTimeout(() => {
     notification.classList.add('opacity-0', 'translate-y-2');
     notification.addEventListener('transitionend', () => {
@@ -811,7 +810,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSandwiches(window.SANDWICHES);
   }
   if (document.querySelector('.category-filter')) initCategoryFilters();
-  
+
   // Initialize other components
   // Se elimina initProductFiltering para evitar conflicto con filtros de sándwiches
   // No es necesario volver a llamar a initCart()
@@ -825,7 +824,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (document.getElementById("waBtn")) {
     document.getElementById("waBtn").href = waContactLink();
   }
-  
+
   // Set up share button
   const shareBtn = document.getElementById("shareCatalog");
   if (shareBtn) shareBtn.addEventListener('click', shareOnWhatsApp);
@@ -864,7 +863,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
   };
-  
+
   // Execute the async function
   await loadProducts();
 

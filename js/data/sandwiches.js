@@ -7,7 +7,7 @@ window.SANDWICHES = [
     name: "Sándwich de Milanesa",
     category: "clasicos",
     description: "Pan casero, milanesa de ternera, lechuga, tomate y mayonesa casera.",
-    price: 1200,
+    price: 12000,
     badge: "Clásico",
     icon: "fas fa-hamburger"
   },
@@ -15,7 +15,7 @@ window.SANDWICHES = [
     name: "Sándwich Especial",
     category: "especiales",
     description: "Pan de campo, lomito, queso, huevo, jamón, lechuga, tomate y mayonesa.",
-    price: 1500,
+    price: 15000,
     badge: "Especial",
     icon: "fas fa-bacon"
   },
@@ -23,7 +23,7 @@ window.SANDWICHES = [
     name: "Vegetariano Especial",
     category: "vegetarianos",
     description: "Pan de semillas, berenjena grillada, zuchini, queso de cabra y pesto.",
-    price: 1350,
+    price: 13500,
     badge: "Vegetariano",
     icon: "fas fa-leaf"
   },
@@ -31,7 +31,7 @@ window.SANDWICHES = [
     name: "Lomito Completo",
     category: "especiales",
     description: "Lomito, queso, jamón, huevo, lechuga, tomate y aderezos.",
-    price: 1550,
+    price: 15500,
     badge: "Especial",
     icon: "fas fa-drumstick-bite"
   },
@@ -39,7 +39,7 @@ window.SANDWICHES = [
     name: "Milanesa Napolitana",
     category: "clasicos",
     description: "Milanesa con salsa de tomate, jamón y queso.",
-    price: 1450,
+    price: 14500,
     badge: "Clásico",
     icon: "fas fa-bread-slice"
   },
@@ -47,7 +47,7 @@ window.SANDWICHES = [
     name: "Caprese",
     category: "vegetarianos",
     description: "Pan ciabatta, tomate, mozzarella fresca, albahaca y oliva.",
-    price: 1250,
+    price: 12500,
     badge: "Vegetariano",
     icon: "fas fa-seedling"
   }
