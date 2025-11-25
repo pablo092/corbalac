@@ -57,68 +57,6 @@ function initGlideCarousel() {
   }
 }
 
-/* ====== Scroll Animations & Counters ====== */
-function initScrollAnimations() {
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target); // Animate only once
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-}
-
-function initNumberCounters() {
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5
-  };
-
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-target'));
-        if (!isNaN(target)) {
-          animateValue(el, 0, target, 2000);
-          observer.unobserve(el);
-        }
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.counter').forEach(el => {
-    observer.observe(el);
-  });
-}
-
-function animateValue(obj, start, end, duration) {
-  let startTimestamp = null;
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString('es-AR');
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    } else {
-      obj.innerHTML = end.toLocaleString('es-AR') + (obj.dataset.suffix || '');
-    }
-  };
-  window.requestAnimationFrame(step);
-}
-
 /* ====== Watermark and Floating Top Icon (optional) ====== */
 function initWatermarkAndScrollIcon() {
   const floatingIcon = document.getElementById('floatingIcon');
@@ -156,10 +94,6 @@ function initWatermarkAndScrollIcon() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  // Init animations
-  initScrollAnimations();
-  initNumberCounters();
 }
 
 /* ====== CATÁLOGO ====== */
@@ -244,7 +178,7 @@ function render(products, query = '') {
   }
 
   $grid.innerHTML = filtered.map(p => `
-    <div class="product-card bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300 reveal">
+    <div class="product-card bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300">
       <div class="h-48 bg-gray-100 overflow-hidden">
         ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">` :
       `<div class="w-full h-full flex items-center justify-center text-gray-400">
@@ -255,7 +189,7 @@ function render(products, query = '') {
         <h4 class="font-semibold text-lg mb-1">${p.name}</h4>
         ${p.category ? `<p class="text-sm text-gray-500 mb-2">${p.category}</p>` : ''}
         <div class="flex justify-between items-center mt-3">
-          <span class="text-brand-dark font-bold counter" data-target="${p.price}">${fmtMoney(p.price)}</span>
+          <span class="text-brand-dark font-bold">${fmtMoney(p.price)}</span>
           <span class="text-sm text-gray-500">${p.unit || 'unidad'}</span>
         </div>
       </div>
@@ -278,7 +212,7 @@ function renderSandwiches(items) {
       : `<div class="w-full h-full flex items-center justify-center"><i class="${icon} text-6xl text-amber-400"></i></div>`;
 
     return `
-      <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group reveal" data-category="${item.category}">
+      <div class="sandwich-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group" data-category="${item.category}">
         <div class="h-56 bg-gray-100 overflow-hidden relative">
           ${imageHtml}
           ${badge ? `<span class="absolute top-4 right-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">${badge}</span>` : ''}
@@ -290,7 +224,7 @@ function renderSandwiches(items) {
           <p class="text-gray-600 text-sm mb-4 line-clamp-2">${item.description || ''}</p>
           <div class="flex flex-col gap-1">
             <div class="flex items-baseline justify-between">
-              <span class="text-2xl font-bold text-brand-dark counter" data-target="${typeof item.price === 'number' ? item.price : 0}">${price}</span>
+              <span class="text-2xl font-bold text-brand-dark">${price}</span>
               <span class="text-xs text-gray-500">/unidad</span>
             </div>
             ${cashPrice ? `<div class="text-sm text-green-600 font-medium flex items-center gap-1"><i class="fas fa-money-bill-wave"></i> ${cashPrice} efectivo</div>` : ''}

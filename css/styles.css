@@ -1,6 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 
 /* =========================
+   Animaciones
+   ========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* =========================
    Variables de marca
    ========================= */
 :root {
@@ -21,50 +40,6 @@
 /* =========================
    Animations
    ========================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 1.5s ease-in-out forwards;
-}
-
-/* =========================
-   Scroll Reveal
-   ========================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
-  will-change: opacity, transform;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered delays for children if needed */
-.reveal-delay-100 {
-  transition-delay: 0.1s;
-}
-
-.reveal-delay-200 {
-  transition-delay: 0.2s;
-}
-
-.reveal-delay-300 {
-  transition-delay: 0.3s;
-}
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -898,4 +873,220 @@ select:focus:invalid {
   @page {
     margin: 1.5cm;
   }
+}
+
+/* Marca de agua */
+@media screen {
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('../logo.png') no-repeat center center;
+    background-size: clamp(520px, 72vmin, 1200px) !important;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity .5s ease-in-out;
+  }
+
+  body.watermark-visible::after {
+    opacity: .06 !important;
+  }
+
+  body::after {
+    opacity: 0 !important;
+  }
+}
+
+@media (max-width:1024px) {
+  body.watermark-visible::after {
+    background-position: center center !important;
+    background-size: clamp(320px, 80vmin, 800px) !important;
+    opacity: .03 !important;
+  }
+
+  body>*:not(::after) {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media (max-width:640px) {
+
+  /* Títulos más legibles y compactos en mobile pequeño */
+  h2 {
+    font-size: 1.75rem;
+    line-height: 2.1rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.6rem;
+  }
+
+  /* Botones de filtro: mejor toque y legibilidad */
+  .category-filter {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  /* Botones principales: mayor área táctil */
+  .btn,
+  .btn-primary,
+  .btn-amber,
+  .btn-wa {
+    padding: 0.75rem 1.1rem;
+    font-size: 1rem;
+  }
+
+  /* Flechas del carrusel: área táctil más cómoda */
+  .glide__arrow {
+    padding: 0.6rem 0.8rem !important;
+  }
+
+  body.watermark-visible::after {
+    background-position: right -10vw top 24px;
+    background-size: clamp(320px, 65vmin, 760px) !important;
+    opacity: .1 !important;
+  }
+}
+
+/* Iconos de Queso, tarjetas de contacto (tu estilo) */
+.cheese-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: var(--brand-cheese);
+  border-radius: 50%;
+  margin-right: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 2px solid var(--brand-dark);
+}
+
+.cheese-icon i {
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  position: relative;
+  z-index: 2;
+}
+
+.cheese-icon::before,
+.cheese-icon::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, .4);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.cheese-icon::before {
+  width: 12px;
+  height: 12px;
+  top: 15px;
+  right: 20px;
+}
+
+.cheese-icon::after {
+  width: 8px;
+  height: 8px;
+  bottom: 20px;
+  left: 15px;
+}
+
+.contacto-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.contacto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1) !important;
+}
+
+.contacto-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: rgba(253, 230, 138, .2);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+@media print {
+  body::after {
+    display: none !important;
+  }
+
+  #actions,
+  #contacto,
+  #hero,
+  #carousel,
+  #footer,
+  #shareBtn,
+  #waBtn {
+    display: none !important;
+  }
+}
+
+/* ====== NUEVO: Navbar FX (pill/bubble) ====== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.fx-nav {
+  position: relative;
+  border-radius: 9999px;
+}
+
+.fx-notch {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2.25rem;
+  /* alto del “pill” */
+  width: var(--w, 0px);
+  /* lo define JS */
+  transform: translateX(var(--x, 0px)) translateY(-50%);
+  background: var(--brand-ivory);
+  /* respeta tu esquema, sobre bg-amber-50 */
+  border-radius: 9999px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .08);
+  transition:
+    transform .45s cubic-bezier(.2, .9, .25, 1.2),
+    width .45s cubic-bezier(.2, .9, .25, 1.2);
+  z-index: 0;
+}
+
+.fx-item {
+  position: relative;
+  z-index: 1;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  color: var(--brand-dark);
+  transition: color .25s ease, transform .25s ease;
+  white-space: nowrap;
+}
+
+.fx-item:hover {
+  color: #92400e;
+}
+
+.fx-item.active {
+  color: #1f2937;
+  font-weight: 600;
+  transform: translateY(-1px);
 }
